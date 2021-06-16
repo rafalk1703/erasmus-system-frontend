@@ -21,22 +21,30 @@ class ContractsList extends Component {
     render() {
         return (
             <div>
-                <h1 className = 'text-center'>Contracts List</h1>
-            <Accordion>
-                {
-                    this.state.contracts.map(
-                        contract =>
-                            <Card>
-                                <Accordion.Toggle as={Card.Header} eventKey={contract.id}>
-                                {contract.erasmusCode}
-    </Accordion.Toggle>
-                                <Accordion.Collapse eventKey={contract.id}>
-                                    <Card.Body>{contract.degree}</Card.Body>
-                                </Accordion.Collapse>
-                            </Card>
-                    )
-                }
-            </Accordion>
+                <h1 className='text-center'>Lista Kontraktów</h1>
+                <Accordion>
+                    {
+                        this.state.contracts.map(
+                            contract =>
+                                <Card>
+                                    <Accordion.Toggle as={Card.Header} eventKey={contract.id}>
+                                        {contract.erasmusCode}
+                                    </Accordion.Toggle>
+                                    <Accordion.Collapse eventKey={contract.id}>
+                                        <Card.Body>
+                                            <ul>
+                                                <li>{contract.contractAcademy.country}</li>
+                                                <li>{contract.contractAcademy.name}</li>
+                                                <li>{contract.startYear}-{contract.endYear}</li>
+                                                <li>{contract.degree}</li>
+                                                <li>{contract.vacanies} miejsca</li>
+                                            </ul>
+                                        </Card.Body>
+                                    </Accordion.Collapse>
+                                </Card>
+                        )
+                    }
+                </Accordion>
             </div>
         );
     }

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import ContractService from '../services/ContractService';
+import { Accordion, Card } from "react-bootstrap";
+import "./ContractList.css";
 
 
 class ContractsList extends Component {
@@ -16,37 +18,29 @@ class ContractsList extends Component {
             this.setState({ contracts: response.data.body })
         });
     }
-
     render() {
         return (
             <div>
                 <h1 className = 'text-center'>Contracts List</h1>
-                <table className = 'table table-striped'>
-                    <thead>
-                        <tr>
-                            <td>Contract Id</td>
-                            <td>Erasmus Code</td>
-                            <td>Vacancies</td>
-                            <td>Degree</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            this.state.contracts.map(
-                                contract => 
-                                <tr key = {contract.id}>
-                                    <td> {contract.id} </td>
-                                    <td> {contract.erasmusCode} </td>
-                                    <td> {contract.vacancies} </td>
-                                    <td> {contract.degree} </td>
-                                </tr>
-                            )
-                        }
-                    </tbody>
-                </table>
+            <Accordion>
+                {
+                    this.state.contracts.map(
+                        contract =>
+                            <Card>
+                                <Accordion.Toggle as={Card.Header} eventKey={contract.id}>
+                                {contract.erasmusCode}
+    </Accordion.Toggle>
+                                <Accordion.Collapse eventKey={contract.id}>
+                                    <Card.Body>{contract.degree}</Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+                    )
+                }
+            </Accordion>
             </div>
         );
     }
+
 }
 
 export default ContractsList;

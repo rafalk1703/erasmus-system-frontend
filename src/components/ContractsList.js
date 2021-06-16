@@ -37,7 +37,7 @@ class ContractsList extends Component {
                                                 <li>{contract.contractAcademy.name}</li>
                                                 <li>{contract.startYear}-{contract.endYear}</li>
                                                 <li>{contract.degree}</li>
-                                                <li>{contract.vacanies} miejsca</li>
+                                                <li>{contract.vacancies} miejsca</li>
                                             </ul>
                                         </Card.Body>
                                     </Accordion.Collapse>

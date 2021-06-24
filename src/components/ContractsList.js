@@ -33,8 +33,8 @@ class ContractsList extends Component {
                                     <Accordion.Collapse eventKey={contract.id}>
                                         <Card.Body>
                                             <ul>
-                                                <li>{contract.contractAcademy.country}</li>
-                                                <li>{contract.contractAcademy.name}</li>
+                                                <li>{contract.faculty}</li>
+                                                <li>{contract.contractCoordinator.name}</li>
                                                 <li>{contract.startYear}-{contract.endYear}</li>
                                                 <li>{contract.degree}</li>
                                                 <li>{contract.vacancies} miejsca</li>

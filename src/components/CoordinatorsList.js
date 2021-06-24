@@ -13,7 +13,7 @@ class CoordinatorsList extends Component {
 
     componentDidMount() {
         CoordinatorsService.getAllCoordinators().then((response) => {
-            this.setState({ coordinators: response.data.contractCoordinators })
+            this.setState({ coordinators: response.data.body })
         });
     }
 
@@ -37,7 +37,7 @@ class CoordinatorsList extends Component {
                                 <tr key = {coordinator.id}>
                                     <td> {coordinator.id} </td>
                                     <td> {coordinator.name} </td>
-                                    <td> {coordinator.surname} </td>
+                                    <td> {coordinator.code} </td>
                                     <td> {coordinator.email} </td>
                                 </tr>
                             )

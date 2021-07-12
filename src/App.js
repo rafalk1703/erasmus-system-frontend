@@ -6,6 +6,7 @@ import Contracts from './pages/Contracts';
 import Coordinators from './pages/Coordinators';
 import Qualification from './pages/Qualification';
 import Editions from './pages/Editions';
+import NewEdition from './pages/NewEdition';
 
 
 
@@ -22,6 +23,7 @@ class App extends Component {
           <Route path='/coordinators' component={Coordinators} />
           <Route path='/qualification' component={Qualification} />
           <Route path='/editions' component={Editions} />
+          <Route path='/newEdition' component={NewEdition} />
         </Switch>
       </Router>
     </>

@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import UploadFile from '../components/UploadFile';
-import EditionsList from '../components/EditionsList';
 
-class Editions extends Component {
+class NewEdition extends Component {
   render() {
     return (
       <div className="container">
-      <EditionsList/>
+      <UploadFile/>
       </div>
     );
   }
 }
 
-export default Editions;
+export default NewEdition;

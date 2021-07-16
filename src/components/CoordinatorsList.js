@@ -26,7 +26,7 @@ class CoordinatorsList extends Component {
                         <tr>
                             <td>Contract Id</td>
                             <td>Name</td>
-                            <td>Surname</td>
+                            <td>Code</td>
                             <td>Email</td>
                         </tr>
                     </thead>

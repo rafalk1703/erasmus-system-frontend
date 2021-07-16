@@ -10,8 +10,12 @@ class EditionService {
         return axios.get(ALL_EDITIONS_REST_API_URL);
     }
 
-    deleteEdition() {
-        return axios.get(DELETE_EDITION_REST_API_URL);
+    getAllEditionsByYear(year) {
+        return axios.get(ALL_EDITIONS_REST_API_URL);
+    }
+
+    deleteEdition(year) {
+        return axios.get(DELETE_EDITION_REST_API_URL + "/" + year);
     }
 }
 

@@ -12,6 +12,13 @@ class EditionsList extends Component {
         this.state = {
             editions: []
         }
+        this.deleteEdition = this.deleteEdition.bind(this);
+    }
+
+    deleteEdition(year) {
+        EditionService.deleteEdition(year).then( res => {
+            this.setState({editions: this.state.editions.filter(editions => editions.year !== year)})
+        });
     }
 
     componentDidMount() {
@@ -40,7 +47,7 @@ class EditionsList extends Component {
                                             <td> {editions.year} </td>
                                             <td>
                                                 <Button id="details" variant="outline-primary">Szczegóły Edycji</Button>
-                                                <Button id="delete" variant="outline-primary">Usuń Edycję</Button>
+                                                <Button onClick={ () => this.deleteEdition(editions.year)} id="delete" variant="outline-primary">Usuń Edycję</Button>
                                             </td>
                                         </tr>
                                 )

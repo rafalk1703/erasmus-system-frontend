@@ -1,18 +1,56 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import { FaThinkPeaks } from 'react-icons/fa';
 
 class UploadFile extends Component {
 
-    state = { 
+
+    constructor(props) {
+        super(props);
+    
+        this.state = { 
   
-        // Initially, no file is selected 
-        selectedFile: null
-      }; 
+            // Initially, no file is selected 
+            coordinatorsFile: null,
+            contractsFile: null,
+            registrationsFile: null,
+            year: " "
+          }; 
+    
+        this.takeYear = this.takeYear.bind(this);
+    }
+    
        
+
+      takeYear(e) { 
+        this.setState({ year: e.target.value })};
+
       // On file select (from the pop up) 
-      onFileChange = event => { 
+      onFile1Change = event => { 
         // Update the state 
-        this.setState({ selectedFile: event.target.files[0] }); 
+        
+        this.setState({ coordinatorsFile: event.target.files[0] }); 
+        // this.setState({ contractsFile: event.target.files[1] });
+        // this.setState({ registrationsFile: event.target.files[2] });
+
+      }; 
+
+      onFile2Change = event => { 
+        // Update the state 
+        
+        this.setState({ contractsFile: event.target.files[0] }); 
+        // this.setState({ contractsFile: event.target.files[1] });
+        // this.setState({ registrationsFile: event.target.files[2] });
+
+      }; 
+
+      onFile3Change = event => { 
+        // Update the state 
+        
+        this.setState({ registrationsFile: event.target.files[0] }); 
+        // this.setState({ contractsFile: event.target.files[1] });
+        // this.setState({ registrationsFile: event.target.files[2] });
+
       }; 
        
       // On file upload (click the upload button) 
@@ -21,33 +59,82 @@ class UploadFile extends Component {
         const formData = new FormData(); 
        
         // Update the formData object 
-        formData.append( 
-          "file", 
-          this.state.selectedFile, 
-          
-        ); 
+        formData.append("coordinators_file", this.state.coordinatorsFile); 
+        formData.append("contracts_file", this.state.contractsFile);
+        formData.append("registrations_file", this.state.registrationsFile);
        
         // Details of the uploaded file 
-        console.log(this.state.selectedFile); 
+        console.log(this.state.coordinatorsFile); 
+        console.log(this.state.contractsFile); 
+        console.log(this.state.registrationsFile); 
        
         // Request made to the backend api 
         // Send formData object 
-        axios.post("http://localhost:8080/api/import/uploadCSV", formData); 
+        axios.post("http://localhost:8080/api/edition/add/" + this.state.year, formData); 
       }; 
 
-      fileData = () => { 
-        if (this.state.selectedFile) { 
+      file1Data = () => { 
+        if (this.state.coordinatorsFile) { 
             
           return ( 
             <div> 
               <h2>File Details:</h2> 
-              <p>File Name: {this.state.selectedFile.name}</p> 
-              <p>File Type: {this.state.selectedFile.type}</p> 
+              <p>File Name: {this.state.coordinatorsFile.name}</p> 
+              <p>File Type: {this.state.coordinatorsFile.type}</p> 
               <p> 
                 Last Modified:{" "} 
-                {this.state.selectedFile.lastModifiedDate.toDateString()} 
+                {this.state.coordinatorsFile.lastModifiedDate.toDateString()} 
               </p> 
+        </div> 
+          ); 
+        } else { 
+          return ( 
+            <div> 
+              <br /> 
+              <h4>Choose before Pressing the Upload button</h4> 
             </div> 
+          ); 
+        } 
+      }; 
+
+      file2Data = () => { 
+        if (this.state.contractsFile) { 
+            
+          return ( 
+            <div> 
+              <h2>File Details:</h2> 
+              <p>File Name: {this.state.contractsFile.name}</p> 
+              <p>File Type: {this.state.contractsFile.type}</p> 
+              <p> 
+                Last Modified:{" "} 
+                {this.state.contractsFile.lastModifiedDate.toDateString()} 
+              </p> 
+        </div> 
+          ); 
+        } else { 
+          return ( 
+            <div> 
+              <br /> 
+              <h4>Choose before Pressing the Upload button</h4> 
+            </div> 
+          ); 
+        } 
+      }; 
+
+      file3Data = () => { 
+        if (this.state.registrationsFile) { 
+            
+          return ( 
+            <div> 
+              <h2>File Details:</h2> 
+              <p>File Name: {this.state.registrationsFile.name}</p> 
+              <p>File Type: {this.state.registrationsFile.type}</p> 
+              <p> 
+                Last Modified:{" "} 
+                {this.state.registrationsFile.lastModifiedDate.toDateString()} 
+              </p> 
+            
+        </div> 
           ); 
         } else { 
           return ( 
@@ -62,17 +149,26 @@ class UploadFile extends Component {
       render() { 
         return ( 
           <div> 
-              <h1 className='text-center'>Lista Kontraktów</h1>
+              <h1 className='text-center'>Dodaj Pliki</h1>
               <h3> 
                 File Upload using React! 
               </h3> 
               <div> 
-                  <input type="file" onChange={this.onFileChange} /> 
+                  <label>koordynatorzt</label>
+                  <input type="file" onChange={this.onFile1Change} /> 
+                  <label>kontrakty</label>
+                  <input type="file" onChange={this.onFile2Change} /> 
+                  <label>wnioski</label>
+                  <input type="file" onChange={this.onFile3Change} /> 
+                  <label>Rok edycji</label>
+                  <input type="text" id="year" name="year" onChange={this.takeYear} placeholder="Rok edycji" /> 
                   <button onClick={this.onFileUpload}> 
                     Upload! 
                   </button> 
               </div> 
-            {this.fileData()} 
+            {this.file1Data()} 
+            {this.file2Data()} 
+            {this.file3Data()} 
           </div> 
         ); 
       } 

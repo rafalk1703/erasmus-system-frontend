@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
+import Navbar2 from './components/Navbar2';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Contracts from './pages/Contracts';
 import Coordinators from './pages/Coordinators';
@@ -18,7 +19,7 @@ class App extends Component {
     return (
       <>
       <Router>
-        <Navbar />
+        <Navbar2/>
         <Switch>
           <Route path='/contracts' exact component={Contracts} />
           <Route path='/coordinators' component={Coordinators} />

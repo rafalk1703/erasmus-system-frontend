@@ -16,8 +16,8 @@ class EditionsList extends Component {
     }
 
     deleteEdition(year) {
-        EditionService.deleteEdition(year).then( res => {
-            this.setState({editions: this.state.editions.filter(editions => editions.year !== year)})
+        EditionService.deleteEdition(year).then(res => {
+            this.setState({ editions: this.state.editions.filter(editions => editions.year !== year) })
         });
     }
 
@@ -27,45 +27,47 @@ class EditionsList extends Component {
         });
     }
 
-        render() {
-            return (
-                <div>
-                    <h1 className='text-center'>Editions List</h1>
-                    <Table striped bordered hover>
-                        <thead>
-                            <tr>
-                                <td>Edition Id</td>
-                                <td>Year</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                this.state.editions.map(
-                                    editions =>
-                                        <tr key={editions.id}>
-                                            <td> {editions.id} </td>
-                                            <td> {editions.year} </td>
-                                            <td>
+    render() {
+        return (
+            <div>
+                <h1 className='text-center'>Editions List</h1>
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <td>Edition Id</td>
+                            <td>Year</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            this.state.editions.map(
+                                editions =>
+                                    <tr key={editions.id}>
+                                        <td> {editions.id} </td>
+                                        <td> {editions.year} </td>
+                                        <td>
+                                            <Link to={`/editionStatistics/${editions.year}`}>
                                                 <Button id="details" variant="outline-primary">Szczegóły Edycji</Button>
-                                                <Button onClick={ () => this.deleteEdition(editions.year)} id="delete" variant="outline-primary">Usuń Edycję</Button>
-                                            </td>
-                                        </tr>
-                                )
-                            }
+                                            </Link>
+                                            <Button onClick={() => this.deleteEdition(editions.year)} id="delete" variant="outline-primary">Usuń Edycję</Button>
+                                        </td>
+                                    </tr>
+                            )
+                        }
 
-                            
 
-                        </tbody>
-                    </Table>
 
-                    <Link to="/newEdition">
-                        <Button variant="outline-primary" type="button">
-                            Dodaj nową edycję
+                    </tbody>
+                </Table>
+
+                <Link to="/newEdition">
+                    <Button variant="outline-primary" type="button">
+                        Dodaj nową edycję
                     </Button>
-                    </Link>
-                </div>
-            );
-        }
+                </Link>
+            </div>
+        );
     }
+}
 
-    export default EditionsList;
+export default EditionsList;

@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { Button } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
+import {Alert} from 'react-bootstrap';
 import "./EditionsList.css";
 import EditionService from '../services/EditionService';
+import { Last } from 'react-bootstrap/esm/PageItem';
 
 class EditionsList extends Component {
 
@@ -21,6 +23,8 @@ class EditionsList extends Component {
         });
     }
 
+
+
     componentDidMount() {
         EditionService.getAllEditions().then((response) => {
             this.setState({ editions: response.data })
@@ -28,12 +32,21 @@ class EditionsList extends Component {
     }
 
     render() {
+
+        const renderIsActive = (isActive) => {
+            if (isActive) {
+                return <Alert variant="success">active</Alert>;
+            } else {
+                return <Alert variant="danger">no active</Alert>;
+            }
+        }
         return (
             <div>
                 <h1 className='text-center'>Editions List</h1>
                 <Table striped bordered hover>
                     <thead>
                         <tr>
+                            <td>IsActive</td>
                             <td>Edition Id</td>
                             <td>Year</td>
                         </tr>
@@ -43,6 +56,7 @@ class EditionsList extends Component {
                             this.state.editions.map(
                                 editions =>
                                     <tr key={editions.id}>
+                                        <td>{renderIsActive(editions.isActive)}</td>
                                         <td> {editions.id} </td>
                                         <td> {editions.year} </td>
                                         <td>

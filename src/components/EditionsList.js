@@ -15,6 +15,7 @@ class EditionsList extends Component {
             editions: []
         }
         this.deleteEdition = this.deleteEdition.bind(this);
+        this.deactiveEdition = this.deactiveEdition.bind(this);
     }
 
     deleteEdition(year) {
@@ -23,6 +24,12 @@ class EditionsList extends Component {
         });
     }
 
+    deactiveEdition(year) {
+        EditionService.deactiveEdition(year).then(res => {
+            this.setState({})
+        });
+        window.location.reload();
+    }
 
 
     componentDidMount() {
@@ -35,9 +42,9 @@ class EditionsList extends Component {
 
         const renderIsActive = (isActive) => {
             if (isActive) {
-                return <Alert variant="success">active</Alert>;
+                return <Alert variant="success">aktywna</Alert>;
             } else {
-                return <Alert variant="danger">no active</Alert>;
+                return <Alert variant="danger">nieaktywna</Alert>;
             }
         }
         return (
@@ -64,6 +71,7 @@ class EditionsList extends Component {
                                                 <Button id="details" variant="outline-primary">Szczegóły Edycji</Button>
                                             </Link>
                                             <Button onClick={() => this.deleteEdition(editions.year)} id="delete" variant="outline-primary">Usuń Edycję</Button>
+                                            <Button onClick={() => this.deactiveEdition(editions.year)} id="deactive" variant="outline-primary">Archiwizuj Edycję</Button>
                                         </td>
                                     </tr>
                             )

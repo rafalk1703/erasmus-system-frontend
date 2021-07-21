@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import Statistics from '../components/Statistics';
 
 
 class EditionStatistics extends Component {
   render() {
     return (
       <div className="container">
-      Statystyki edycji {this.props.match.params.year}
+      <Statistics year={this.props.match.params.year}/>
       </div>
     );
   }

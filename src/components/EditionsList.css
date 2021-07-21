@@ -1,0 +1,9 @@
+table tr td:nth-child(4) {
+    text-align: right;
+}
+
+
+#delete, #details{
+    display: inline-block;
+    margin-right: 10px;
+ }

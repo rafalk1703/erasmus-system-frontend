@@ -1,6 +1,7 @@
 import React from "react";
 import QualificationService from '../services/QualificationService';
 import {Table} from "react-bootstrap";
+import "./QualificationTable.css";
 
 class QualificationTable extends React.Component {
 
@@ -26,28 +27,37 @@ class QualificationTable extends React.Component {
                 {
                     this.state.contracts.map(
                         contract =>
-                            <Table bordered hover>
+                            <table>
                                 <thead>
-                                <tr>{contract.erasmusCode}</tr>
-                                <tr>
-                                    <td>{contract.contractsCoordinator.name}</td>
-                                    <td>ilość miejsc: {contract.vacancies}</td>
-                                </tr>
+                                    <tr>
+                                        <div>
+                                            <h4 className='text-center'> {contract.erasmusCode} </h4>
+                                        </div>
+                                        <div>
+                                            {contract.contractsCoordinator.name} ilość miejsc: {contract.vacancies}
+                                        </div>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                {
-                                    contract.registrations.map(
-                                        registration =>
-                                            <tr key={registration.id}>
-                                                <td>{registration.isAccepted}</td>
-                                                <td>{registration.priority}</td>
-                                                <td>{registration.student.name} {registration.student.surname}</td>
-                                                <td>{registration.student.department} {registration.student.field} {registration.student.year} rok</td>
-                                            </tr>
-                                    )
-                                }
+                                    {
+                                        contract.registrations.map(
+                                            registration =>
+                                                <tr key={registration.id}>
+                                                    {registration.isAccepted}
+                                                    <div className='square'>
+                                                        {registration.priority}
+                                                    </div>
+                                                    <div>
+                                                        <h5>{registration.student.name} {registration.student.surname}</h5>
+                                                    </div>
+                                                    <div>
+                                                        {registration.student.department}, {registration.student.field}, {registration.student.year} rok
+                                                    </div>
+                                                </tr>
+                                        )
+                                    }
                                 </tbody>
-                            </Table>
+                            </table>
                     )
                 }
             </div>

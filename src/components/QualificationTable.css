@@ -1,0 +1,13 @@
+.square {
+    height: 54px;
+    width: 50px;
+    background-color: #FFD700;
+    float: left;
+    text-align: center;
+}
+
+table {
+    margin: auto;
+    white-space: nowrap;
+    margin-bottom: 30px;
+}

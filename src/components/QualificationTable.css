@@ -1,12 +1,38 @@
-.square {
-    height: 54px;
-    width: 50px;
-    float: left;
-    text-align: center;
-    margin-left: 2px;
-    margin-right: 2px;
-}
-
 Button {
     float: left;
+}
+
+#header {
+    text-align: center;
+    margin-top: 2%;
+    margin-bottom: 3%;
+}
+
+#container {
+    margin-bottom: 2%;
+}
+
+#reg-card {
+    border-radius: 0;
+    border-color:  	#E0E0E0;
+}
+
+#reg-div {
+    margin: 2px;
+}
+
+#plus-minus {
+    margin: 10px;
+}
+
+#square-priority {
+    text-align: center;
+    line-height: 50px;
+}
+
+.square {
+    height: 50px;
+    width: 50px;
+    float: left;
+    margin: 5px 10px 5px 0;
 }

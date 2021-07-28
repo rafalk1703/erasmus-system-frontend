@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, CardColumns, Row, Col, Button} from "react-bootstrap";
+import {Card, CardColumns, Row, Col, Button, Container} from "react-bootstrap";
 import QualificationService from '../services/QualificationService';
 import "./QualificationTable.css";
 
@@ -23,55 +23,56 @@ class QualificationTable extends React.Component {
     render() {
         return (
             <div>
-                <h1 className='text-center'>Kwalifikacja Studentów</h1>
-                <Row xs={1} md={3} className="g-4">
-                    {
-                        this.state.contracts.map(
-                            contract =>
-                                <Col>
-                                    <Card>
-                                        <Card.Body>
-                                            <Card.Title>
-                                                <h4 className='text-center'> {contract.erasmusCode} </h4>
-                                            </Card.Title>
-                                            <Card.Subtitle>
-                                                {contract.contractsCoordinator.name} ilość miejsc: {contract.vacancies}
-                                            </Card.Subtitle>
+                <h1 id='header'>Kwalifikacja Studentów</h1>
+                <Container id="container">
+                    <Row xs={1} md={3} className="g-4">
+                        {
+                            this.state.contracts.map(
+                                contract =>
+                                    <Col>
+                                        <Card bg={'light'}>
+                                            <Card.Header>
+                                                <h4 className='text-center'>{contract.erasmusCode}</h4>
+                                                <Container>
+                                                    <Row className="justify-content-md-center">
+                                                        <Col md="auto" xs="auto">{contract.contractsCoordinator.name}</Col>
+                                                        <Col md="auto" xs="auto">ilość miejsc: {contract.vacancies}</Col>
+                                                    </Row>
+                                                </Container>
+                                            </Card.Header>
                                             <CardColumns>
                                                 {
                                                     contract.registrations.map(
                                                         registration =>
-                                                            <Card key={registration.id}>
-                                                                <div>
-                                                                    <div>
-                                                                        <Button variant="secondary">+</Button>
-                                                                    </div>
+                                                            <Card key={registration.id} id="reg-card">
+                                                                <div id="reg-div">
+                                                                    <Button variant="outline-dark" id="plus-minus">+</Button>
                                                                     <div className='square'
                                                                          style={{
                                                                              backgroundColor: (registration.priority == '1') ? '#FFD700' :
                                                                                  (registration.priority == '2') ? '#C0C0C0' : '#A52A2A'
                                                                          }}>
-                                                                        {registration.priority}
+                                                                        <h5 id="square-priority">{registration.priority}</h5>
                                                                     </div>
                                                                     <div>
-                                                                        <div>
-                                                                            <h5>{registration.student.name} {registration.student.surname}</h5>
-                                                                        </div>
-                                                                        <div>
+                                                                        <h5>
+                                                                            {registration.student.name} {registration.student.surname}
+                                                                        </h5>
+                                                                        <h6>
                                                                             {registration.student.department}, {registration.student.field}, {registration.student.year} rok
-                                                                        </div>
+                                                                        </h6>
                                                                     </div>
                                                                 </div>
                                                             </Card>
                                                     )
                                                 }
                                             </CardColumns>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                        )
-                    }
-                </Row>
+                                        </Card>
+                                    </Col>
+                            )
+                        }
+                    </Row>
+                </Container>
             </div>
         );
     }

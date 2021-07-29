@@ -1,11 +1,7 @@
-Button {
-    float: left;
-}
-
 #header {
     text-align: center;
-    margin-top: 2%;
-    margin-bottom: 3%;
+    margin-top: 1%;
+    margin-bottom: 2%;
 }
 
 #container {
@@ -21,18 +17,26 @@ Button {
     margin: 2px;
 }
 
-#plus-minus {
-    margin: 10px;
-}
-
 #square-priority {
     text-align: center;
     line-height: 50px;
+}
+
+#student-data {
+    float: left;
+}
+
+#plus-minus {
+    height: 40px;
+    width:  40px;
+    text-align: center;
+    margin: 10px;
+    float: right;
 }
 
 .square {
     height: 50px;
     width: 50px;
     float: left;
-    margin: 5px 10px 5px 0;
+    margin: 5px 15px 5px 5px;
 }

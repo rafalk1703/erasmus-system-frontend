@@ -44,17 +44,17 @@ class QualificationTable extends React.Component {
                                                 {
                                                     contract.registrations.map(
                                                         registration =>
-                                                            <Card key={registration.id} id="reg-card">
+                                                            <Card key={registration.id} id="reg-card"
+                                                                  style={{backgroundColor: registration.isAccepted ? '#d0f0c0' : '#FFFFFF'}}>
                                                                 <div id="reg-div">
-                                                                    <Button variant="outline-dark" id="plus-minus">+</Button>
                                                                     <div className='square'
                                                                          style={{
                                                                              backgroundColor: (registration.priority == '1') ? '#FFD700' :
-                                                                                 (registration.priority == '2') ? '#C0C0C0' : '#A52A2A'
+                                                                                 (registration.priority == '2') ? '#C0C0C0' : '#966919'
                                                                          }}>
                                                                         <h5 id="square-priority">{registration.priority}</h5>
                                                                     </div>
-                                                                    <div>
+                                                                    <div id="student-data">
                                                                         <h5>
                                                                             {registration.student.name} {registration.student.surname}
                                                                         </h5>
@@ -62,6 +62,13 @@ class QualificationTable extends React.Component {
                                                                             {registration.student.department}, {registration.student.field}, {registration.student.year} rok
                                                                         </h6>
                                                                     </div>
+                                                                    <Button variant={registration.isAccepted ? "danger" : "success"} id="plus-minus"
+                                                                            onClick={() => {
+                                                                                registration.isAccepted = !registration.isAccepted
+                                                                                this.setState({contracts: this.state.contracts})}
+                                                                            }>
+                                                                        {registration.isAccepted ? '-' : '+'}
+                                                                    </Button>
                                                                 </div>
                                                             </Card>
                                                     )

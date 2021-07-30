@@ -49,8 +49,8 @@ class QualificationTable extends React.Component {
                                                                 <div id="reg-div">
                                                                     <div className='square'
                                                                          style={{
-                                                                             backgroundColor: (registration.priority == '1') ? '#FFD700' :
-                                                                                 (registration.priority == '2') ? '#C0C0C0' : '#966919'
+                                                                             backgroundColor: (registration.priority == 1) ? '#FFD700' :
+                                                                                 (registration.priority == 2) ? '#C0C0C0' : '#966919'
                                                                          }}>
                                                                         <h5 id="square-priority">{registration.priority}</h5>
                                                                     </div>
@@ -62,12 +62,21 @@ class QualificationTable extends React.Component {
                                                                             {registration.student.department}, {registration.student.field}, {registration.student.year} rok
                                                                         </h6>
                                                                     </div>
-                                                                    <Button variant={registration.isAccepted ? "danger" : "success"} id="plus-minus"
+                                                                    <Button variant={registration.isAccepted ? "danger" : "success"}
+                                                                            id="plus-minus"
+                                                                            disabled={contract.acceptedStudentsAmount >= contract.vacancies && !registration.isAccepted}
                                                                             onClick={() => {
-                                                                                registration.isAccepted = !registration.isAccepted
-                                                                                this.setState({contracts: this.state.contracts})}
-                                                                            }>
-                                                                        {registration.isAccepted ? '-' : '+'}
+                                                                                if (contract.acceptedStudentsAmount < contract.vacancies || registration.isAccepted ) {
+                                                                                    if (registration.isAccepted) {
+                                                                                        contract.acceptedStudentsAmount--;
+                                                                                    } else {
+                                                                                        contract.acceptedStudentsAmount++;
+                                                                                    }
+                                                                                    registration.isAccepted = !registration.isAccepted
+                                                                                    this.setState({contracts: this.state.contracts})
+                                                                                }
+                                                                            }}>
+                                                                        <h5>{registration.isAccepted ? '-' : '+'}</h5>
                                                                     </Button>
                                                                 </div>
                                                             </Card>

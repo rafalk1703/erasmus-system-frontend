@@ -34,6 +34,10 @@
     float: right;
 }
 
+#progress {
+    height: 20px;
+}
+
 .square {
     height: 50px;
     width: 50px;

@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, CardColumns, Row, Col, Button, Container, ProgressBar} from "react-bootstrap";
+import {Card, CardColumns, Row, Col, Button, Container, ProgressBar, FormCheck} from "react-bootstrap";
 import QualificationService from '../services/QualificationService';
 import "./QualificationTable.css";
 
@@ -9,7 +9,9 @@ class QualificationTable extends React.Component {
         super(props)
         this.state = {
             contracts: [],
-            studentsRegistrations: {}
+            studentsRegistrations: {},
+            markedRegistrationsFlags: {},
+            isSthMarked: false
         }
     }
 
@@ -42,6 +44,16 @@ class QualificationTable extends React.Component {
             return acceptedRegistrationsAmount > 1;
         }
 
+        const markStudentRegistrations = (studentId) => {
+            this.state.studentsRegistrations[studentId].map( registrationId => {
+                this.state.markedRegistrationsFlags[registrationId] = !this.state.markedRegistrationsFlags[registrationId];
+            })
+            this.setState({
+                markedRegistrationsFlags: this.state.markedRegistrationsFlags,
+                isSthMarked: !this.state.isSthMarked
+            });
+        }
+
         return (
             <div>
                 <h1 id='header'>Kwalifikacja Studentów</h1>
@@ -67,15 +79,25 @@ class QualificationTable extends React.Component {
                                                         registration =>
                                                             <Card key={registration.id} id="reg-card"
                                                                   style={{
-                                                                      backgroundColor: isConflict(registration) ? '#ff9999' : registration.isAccepted ? '#d0f0c0' : '#FFFFFF'
+                                                                      backgroundColor:
+                                                                          isConflict(registration) ? '#ff9999' :
+                                                                              registration.isAccepted ? '#d0f0c0' : '#FFFFFF'
                                                                   }}>
                                                                 <div id="reg-div">
                                                                     <div className='square'
                                                                          style={{
-                                                                             backgroundColor: (registration.priority === 1) ? '#FFD700' :
-                                                                                 (registration.priority === 2) ? '#C0C0C0' : '#966919'
+                                                                             backgroundColor:
+                                                                                 (registration.priority === 1) ? '#FFD700' :
+                                                                                     (registration.priority === 2) ? '#C0C0C0' : '#966919'
                                                                          }}>
                                                                         <h5 id="square-priority">{registration.priority}</h5>
+                                                                    </div>
+                                                                    <div id="select-box">
+                                                                        <FormCheck type={'checkbox'}
+                                                                                   checked={this.state.markedRegistrationsFlags[registration.id]}
+                                                                                   disabled={!this.state.markedRegistrationsFlags[registration.id] && this.state.isSthMarked}
+                                                                                   onChange={ () => {markStudentRegistrations(registration.student.id)} }
+                                                                        />
                                                                     </div>
                                                                     <div id="student-data">
                                                                         <h5>

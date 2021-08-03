@@ -22,6 +22,11 @@
     line-height: 50px;
 }
 
+#select-box {
+    float: left;
+    margin-top: 1px;
+}
+
 #student-data {
     float: left;
 }

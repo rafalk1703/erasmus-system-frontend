@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, CardColumns, Row, Col, Button, Container, ProgressBar, FormCheck} from "react-bootstrap";
+import {Card, CardColumns, Row, Col, Button, Container, ProgressBar, FormCheck, Badge} from "react-bootstrap";
 import QualificationService from '../services/QualificationService';
 import "./QualificationTable.css";
 
@@ -26,26 +26,8 @@ class QualificationTable extends React.Component {
     }
 
     render() {
-        const isConflict = (registration) => {
-            if (!registration.isAccepted) {
-                return false;
-            }
-            const studentsRegistrations = this.state.studentsRegistrations[registration.student.id];
-            let acceptedRegistrationsAmount = 0;
-            for (var i=0; i<studentsRegistrations.length; i++) {
-                this.state.contracts.map( contract => {
-                    contract.registrations.map( reg => {
-                        if (reg.id === studentsRegistrations[i] && reg.isAccepted) {
-                            acceptedRegistrationsAmount++;
-                        }
-                    })
-                })
-            }
-            return acceptedRegistrationsAmount > 1;
-        }
-
         const markStudentRegistrations = (studentId) => {
-            this.state.studentsRegistrations[studentId].map( registrationId => {
+            this.state.studentsRegistrations[studentId].registrationsIds.map( registrationId => {
                 this.state.markedRegistrationsFlags[registrationId] = !this.state.markedRegistrationsFlags[registrationId];
             })
             this.setState({
@@ -77,10 +59,11 @@ class QualificationTable extends React.Component {
                                                 {
                                                     contract.registrations.map(
                                                         registration =>
-                                                            <Card key={registration.id} id="reg-card"
+                                                            <Card key={registration.id}
+                                                                  id="reg-card"
                                                                   style={{
                                                                       backgroundColor:
-                                                                          isConflict(registration) ? '#ff9999' :
+                                                                          this.state.markedRegistrationsFlags[registration.id] ? '#FFDAB9' :
                                                                               registration.isAccepted ? '#d0f0c0' : '#FFFFFF'
                                                                   }}>
                                                                 <div id="reg-div">
@@ -114,15 +97,46 @@ class QualificationTable extends React.Component {
                                                                                 if (contract.acceptedStudentsAmount < contract.vacancies || registration.isAccepted ) {
                                                                                     if (registration.isAccepted) {
                                                                                         contract.acceptedStudentsAmount--;
+                                                                                        this.state.studentsRegistrations[registration.student.id].acceptedAmount--;
                                                                                     } else {
                                                                                         contract.acceptedStudentsAmount++;
+                                                                                        this.state.studentsRegistrations[registration.student.id].acceptedAmount++;
                                                                                     }
                                                                                     registration.isAccepted = !registration.isAccepted
-                                                                                    this.setState({contracts: this.state.contracts})
+                                                                                    this.setState({
+                                                                                        contracts: this.state.contracts,
+                                                                                        studentsRegistrations: this.state.studentsRegistrations
+                                                                                    })
                                                                                 }
                                                                             }}>
                                                                         <h5>{registration.isAccepted ? '-' : '+'}</h5>
                                                                     </Button>
+                                                                    <div>
+                                                                        <Badge className="badge"
+                                                                               id="warning-badge"
+                                                                               style={{
+                                                                                   display:
+                                                                                       contract.acceptedStudentsAmount === contract.vacancies
+                                                                                       && this.state.studentsRegistrations[registration.student.id].acceptedAmount < 1 ? null : 'none'
+                                                                               }}>BRAK PRZYPISANIA
+                                                                        </Badge>
+                                                                        <Badge className="badge"
+                                                                               id="conflict-badge"
+                                                                               style={{
+                                                                                   display:
+                                                                                       registration.isAccepted
+                                                                                       && this.state.studentsRegistrations[registration.student.id].acceptedAmount > 1 ? null : 'none'
+                                                                               }}>KONFLIKT
+                                                                        </Badge>
+                                                                        <Badge className="badge"
+                                                                               id="assignment-badge"
+                                                                               style={{
+                                                                                   display:
+                                                                                       !registration.isAccepted
+                                                                                       && this.state.studentsRegistrations[registration.student.id].acceptedAmount > 0 ? null : 'none'
+                                                                               }}>JUŻ PRZYPISANY
+                                                                        </Badge>
+                                                                    </div>
                                                                 </div>
                                                             </Card>
                                                     )
@@ -130,7 +144,7 @@ class QualificationTable extends React.Component {
                                             </CardColumns>
                                             <Card.Footer>
                                                     <ProgressBar id="progress"
-                                                                 variant={contract.acceptedStudentsAmount < contract.vacancies ? "warning" : "success"}
+                                                                 variant="success"
                                                                  now={contract.acceptedStudentsAmount / contract.vacancies * 100}
                                                                  label={`${contract.acceptedStudentsAmount} z ${contract.vacancies}`}
                                                     />

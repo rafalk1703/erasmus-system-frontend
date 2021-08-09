@@ -1,11 +1,16 @@
 #header {
     text-align: center;
     margin-top: 1%;
-    margin-bottom: 2%;
+}
+
+#submit-button {
+    margin: 0 10px 25px 0;
+    float: right;
 }
 
 #container {
     margin-bottom: 2%;
+    float: left;
 }
 
 #reg-card {

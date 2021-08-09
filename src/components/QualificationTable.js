@@ -13,10 +13,32 @@ class QualificationTable extends React.Component {
             markedRegistrationsFlags: {},
             isSthMarked: false
         }
+        this.saveQualification = this.saveQualification.bind(this);
+    }
+
+    saveQualification() {
+
+        const registrationsBody = [];
+
+        this.state.contracts.map( contract => {
+            contract.registrations.map( registration => {
+                let reg = {
+                    "registrationId": registration.id,
+                    "acceptanceStatus": registration.isAccepted
+                };
+                registrationsBody.push(reg);
+            });
+        });
+
+        let body = {
+            "registrations": registrationsBody
+        };
+
+        QualificationService.saveQualification(body);
     }
 
     componentDidMount() {
-        QualificationService.getContracts().then(response => {
+        QualificationService.getQualification().then(response => {
             this.setState({contracts: response.data.contracts,
                                 studentsRegistrations: response.data.studentsRegistrations}
             )
@@ -39,6 +61,9 @@ class QualificationTable extends React.Component {
         return (
             <div>
                 <h1 id='header'>Kwalifikacja Studentów</h1>
+                <Button variant="outline-primary" id="submit-button" type="submit" onClick={this.saveQualification}>
+                    Zapisz zmiany
+                </Button>
                 <Container id="container">
                     <Row xs={1} md={3} className="g-4">
                         {

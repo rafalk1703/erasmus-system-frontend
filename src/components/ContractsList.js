@@ -21,9 +21,10 @@ class ContractsList extends Component {
 
     componentDidMount() {
         ContractService.getAllContracts().then((response) => {
-            this.setState({ 
+            this.setState({
                 all: response.data.body,
-                contracts: response.data.body })
+                contracts: response.data.body
+            })
         });
     }
 
@@ -32,14 +33,19 @@ class ContractsList extends Component {
         if (faculty === "") {
             this.setState({
                 faculty: faculty,
-                contracts: this.state.all,
+                contracts: this.state.all.filter(contract => {
+                    return contract.contractCoordinator.name.indexOf(this.state.coordinator) >= 0 &&
+                        contract.degree.indexOf(this.state.degree) >= 0 
+                }),
             })
         }
         else {
             this.setState({
                 faculty: faculty,
-                contracts: this.state.all.filter(contract=> {
-                    return contract.faculty.indexOf(e.target.value)>=0
+                contracts: this.state.all.filter(contract => {
+                    return contract.contractCoordinator.name.indexOf(this.state.coordinator) >= 0 &&
+                        contract.degree.indexOf(this.state.degree) >= 0 &&
+                        contract.faculty.indexOf(faculty) >= 0
                 }),
             })
         }
@@ -50,15 +56,20 @@ class ContractsList extends Component {
         if (coordinator === "") {
             this.setState({
                 coordinator: coordinator,
-                contracts: this.state.all,
+                contracts: this.state.all.filter(contract => {
+                    return contract.degree.indexOf(this.state.degree) >= 0 &&
+                        contract.faculty.indexOf(this.state.faculty) >= 0
+                }),
             })
         }
 
         else {
             this.setState({
                 coordinator: coordinator,
-                contracts: this.state.all.filter(contract=> {
-                    return contract.contractCoordinator.name.indexOf(e.target.value)>=0
+                contracts: this.state.all.filter(contract => {
+                    return contract.contractCoordinator.name.indexOf(coordinator) >= 0 &&
+                        contract.degree.indexOf(this.state.degree) >= 0 &&
+                        contract.faculty.indexOf(this.state.faculty) >= 0
                 }),
             })
         }
@@ -69,15 +80,20 @@ class ContractsList extends Component {
         if (degree === "") {
             this.setState({
                 degree: degree,
-                contracts: this.state.all,
+                contracts: this.state.all.filter(contract => {
+                    return contract.contractCoordinator.name.indexOf(this.state.coordinator) >= 0 &&
+                        contract.faculty.indexOf(this.state.faculty) >= 0
+                }),
             })
         }
 
         else {
             this.setState({
                 degree: degree,
-                contracts: this.state.all.filter(contract=> {
-                    return contract.degree.indexOf(e.target.value)>=0
+                contracts: this.state.all.filter(contract => {
+                    return contract.contractCoordinator.name.indexOf(this.state.coordinator) >= 0 &&
+                        contract.degree.indexOf(degree) >= 0 &&
+                        contract.faculty.indexOf(this.state.faculty) >= 0
                 }),
             })
         }
@@ -101,9 +117,9 @@ class ContractsList extends Component {
                         <InputLabel id="label">Wydział:</InputLabel>
                         <select onChange={this.filteringFacultys}>
                             <option value="">All</option>
-                           
+
                             <option value="WIEiT">WIEiT</option>
-                            
+
 
                         </select>
 
@@ -112,9 +128,9 @@ class ContractsList extends Component {
                     <div class='select' id="filter-text">
                         <InputLabel id="label">Koordynator:</InputLabel>
                         <select onChange={this.filteringCoordinators}>
-                           
+
                             <option value="">All</option>
-                            
+
                             <option value="dr inż. Tomasz Marcin Orzechowski">dr inż. Tomasz Marcin Orzechowski</option>
 
                         </select>
@@ -122,9 +138,9 @@ class ContractsList extends Component {
                     <div class='select' id="filter-text">
                         <InputLabel id="label">Stopień:</InputLabel>
                         <select onChange={this.filteringDegree}>
-                           
+
                             <option value="">All</option>
-                            
+
                             <option value="1st">1st</option>
 
                             <option value="2st">2st</option>
@@ -133,7 +149,7 @@ class ContractsList extends Component {
 
                         </select>
                     </div>
-                    
+
                 </div>
                 <br></br>
                 <Accordion>

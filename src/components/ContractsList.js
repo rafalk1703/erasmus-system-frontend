@@ -29,13 +29,13 @@ class ContractsList extends Component {
     }
 
     filteringFacultys = (e) => {
-        let faculty = e.target.value;
+        let faculty = e.value;
         if (faculty === "") {
             this.setState({
                 faculty: faculty,
                 contracts: this.state.all.filter(contract => {
                     return contract.contractCoordinator.name.indexOf(this.state.coordinator) >= 0 &&
-                        contract.degree.indexOf(this.state.degree) >= 0 
+                        contract.degree.indexOf(this.state.degree) >= 0
                 }),
             })
         }
@@ -52,7 +52,7 @@ class ContractsList extends Component {
     }
 
     filteringCoordinators = (e) => {
-        let coordinator = e.target.value;
+        let coordinator = e.value;
         if (coordinator === "") {
             this.setState({
                 coordinator: coordinator,
@@ -76,7 +76,9 @@ class ContractsList extends Component {
     }
 
     filteringDegree = (e) => {
-        let degree = e.target.value;
+        let degree = e.value;
+        console.log("DEGREEEEEE" + degree);
+
         if (degree === "") {
             this.setState({
                 degree: degree,
@@ -103,53 +105,56 @@ class ContractsList extends Component {
 
     render() {
 
-        // const filteredByFaculty = this.state.contracts.filter(contract => {
-        //     return contract.faculty.toLowerCase().include(search.toLowerCase())
-        // })
-        let uniqueFacultys = [new Set(this.state.contracts.map((contract) => (contract.faculty)))];
-        let uniqueCoordinators = [new Set(this.state.contracts.map((contract) => (contract.contractCoordinator.name)))];
+        const degreeOptions = [
+            { label: "All", value: "" },
+            { label: "1st", value: "1st" },
+            { label: "2st", value: "2st" },
+            { label: "3st", value: "3st" }
+
+        ];
+    
+        let uniqueCoordinatorOptions = [...new Set(this.state.all.map((contract) => (contract.contractCoordinator.name)))];
+
+        const coordinatorOptions = uniqueCoordinatorOptions.map((coordinator) => ({
+            value: coordinator,
+            label: coordinator
+        }))
+
+        coordinatorOptions.push({
+            value: "",
+            label: "All"
+        })
+
+        let uniqueFacultyOptions = [...new Set(this.state.contracts.map((contract) => (contract.faculty)))];
+
+        const facultyOptions = uniqueFacultyOptions.map((faculty) => ({
+            value: faculty,
+            label: faculty
+        }))
+
+        facultyOptions.push({
+            value: "",
+            label: "All"
+        })
+
         return (
             <div>
                 <h1 className='text-center'>Lista Kontraktów</h1>
                 <div className='text-center' id="filter-box">
+                <br></br>
                     <div class='select' id="filter-select">
-
                         <InputLabel id="label">Wydział:</InputLabel>
-                        <select onChange={this.filteringFacultys}>
-                            <option value="">All</option>
-
-                            <option value="WIEiT">WIEiT</option>
-
-
-                        </select>
-
-
+                        <Select options={facultyOptions} onChange={this.filteringFacultys} placeholder="All" />
                     </div>
                     <div class='select' id="filter-text">
                         <InputLabel id="label">Koordynator:</InputLabel>
-                        <select onChange={this.filteringCoordinators}>
-
-                            <option value="">All</option>
-
-                            <option value="dr inż. Tomasz Marcin Orzechowski">dr inż. Tomasz Marcin Orzechowski</option>
-
-                        </select>
+                        <Select options={coordinatorOptions} onChange={this.filteringCoordinators} placeholder="All" />
                     </div>
                     <div class='select' id="filter-text">
                         <InputLabel id="label">Stopień:</InputLabel>
-                        <select onChange={this.filteringDegree}>
-
-                            <option value="">All</option>
-
-                            <option value="1st">1st</option>
-
-                            <option value="2st">2st</option>
-
-                            <option value="3st">3st</option>
-
-                        </select>
+                        <Select options={degreeOptions} onChange={this.filteringDegree} placeholder="All" />
                     </div>
-
+                    <br></br>
                 </div>
                 <br></br>
                 <Accordion>

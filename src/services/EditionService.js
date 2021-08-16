@@ -10,6 +10,8 @@ const DEACTIVE_EDITION_REST_API_URL = 'http://localhost:8080/api/edition/deactiv
 
 const STATISTICS_REST_API_URL = 'http://localhost:8080/api/edition/statistics/';
 
+const ACTIVE_EDITION = 'http://localhost:8080/api/edition/active';
+
 
 class EditionService {
 
@@ -35,6 +37,10 @@ class EditionService {
 
     getStatistics(year) {
         return axios.get(STATISTICS_REST_API_URL + "/" + year);
+    }
+
+    getActiveEdition() {
+        return axios.get(ACTIVE_EDITION);
     }
 }
 

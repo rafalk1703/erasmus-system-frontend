@@ -4,6 +4,7 @@ import { Accordion, Card, Button } from "react-bootstrap";
 import { MenuItem, InputLabel } from '@material-ui/core';
 import Select from "react-select";
 import "./ContractList.css";
+import EditionService from '../services/EditionService';
 
 
 class ContractsList extends Component {
@@ -20,12 +21,24 @@ class ContractsList extends Component {
     }
 
     componentDidMount() {
-        ContractService.getAllContracts().then((response) => {
-            this.setState({
-                all: response.data.body,
-                contracts: response.data.body
-            })
-        });
+
+        try {
+            (async () => {
+                await EditionService.getActiveEdition().then((response1) => {
+                    ContractService.getAllContractsByEdition(response1.data.year).then((response) => {
+                        this.setState({
+                            all: response.data.body,
+                            contracts: response.data.body
+                        })
+                    });
+
+
+                });
+            })()
+        } catch (err) {
+
+        }
+
     }
 
     filteringFacultys = (e) => {
@@ -112,7 +125,7 @@ class ContractsList extends Component {
             { label: "3st", value: "3st" }
 
         ];
-    
+
         let uniqueCoordinatorOptions = [...new Set(this.state.all.map((contract) => (contract.contractCoordinator.name)))];
 
         const coordinatorOptions = uniqueCoordinatorOptions.map((coordinator) => ({
@@ -141,7 +154,7 @@ class ContractsList extends Component {
             <div>
                 <h1 className='text-center'>Lista Kontraktów</h1>
                 <div className='text-center' id="filter-box">
-                <br></br>
+                    <br></br>
                     <div class='select' id="filter-select">
                         <InputLabel id="label">Wydział:</InputLabel>
                         <Select options={facultyOptions} onChange={this.filteringFacultys} placeholder="All" />

@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import { FaThinkPeaks } from 'react-icons/fa';
+import { Button } from 'react-bootstrap';
 import EditionService from '../services/EditionService'
 import "./UploadFile.css";
 
@@ -57,6 +59,8 @@ class UploadFile extends Component {
 
 
     EditionService.addNewEdition(this.state.year, formData);
+
+    window.location.href = "/editions";
     // axios.post("http://localhost:8080/api/edition/add/" + this.state.year, formData); 
   };
 
@@ -64,21 +68,17 @@ class UploadFile extends Component {
     if (this.state.coordinatorsFile) {
 
       return (
-        <div>
-          <h2>File Details:</h2>
-          <p>File Name: {this.state.coordinatorsFile.name}</p>
-          <p>File Type: {this.state.coordinatorsFile.type}</p>
-          <p>
-            Last Modified:{" "}
-            {this.state.coordinatorsFile.lastModifiedDate.toDateString()}
-          </p>
+        <div class="file-details">
+          <p>Szczegóły pliku:</p>
+          <p>Nazwa pliku: {this.state.coordinatorsFile.name}</p>
+          <p>Typ pliku: {this.state.coordinatorsFile.type}</p>
         </div>
       );
     } else {
       return (
         <div>
           <br />
-          <h4>Choose before Pressing the Upload button</h4>
+          
         </div>
       );
     }
@@ -88,21 +88,17 @@ class UploadFile extends Component {
     if (this.state.contractsFile) {
 
       return (
-        <div>
-          <h2>File Details:</h2>
-          <p>File Name: {this.state.contractsFile.name}</p>
-          <p>File Type: {this.state.contractsFile.type}</p>
-          <p>
-            Last Modified:{" "}
-            {this.state.contractsFile.lastModifiedDate.toDateString()}
-          </p>
+        <div class="file-details">
+          <p>Szczegóły pliku:</p>
+          <p>Nazwa pliku: {this.state.contractsFile.name}</p>
+          <p>Typ pliku: {this.state.contractsFile.type}</p>
         </div>
       );
     } else {
       return (
         <div>
           <br />
-          <h4>Choose before Pressing the Upload button</h4>
+         
         </div>
       );
     }
@@ -112,22 +108,17 @@ class UploadFile extends Component {
     if (this.state.registrationsFile) {
 
       return (
-        <div>
-          <h2>File Details:</h2>
-          <p>File Name: {this.state.registrationsFile.name}</p>
-          <p>File Type: {this.state.registrationsFile.type}</p>
-          <p>
-            Last Modified:{" "}
-            {this.state.registrationsFile.lastModifiedDate.toDateString()}
-          </p>
-
+        <div class="file-details">
+          <p><b>Szczegóły pliku:</b></p>
+          <p>Nazwa pliku: {this.state.registrationsFile.name}</p>
+          <p>Typ pliku: {this.state.registrationsFile.type}</p>
         </div>
       );
     } else {
       return (
         <div>
           <br />
-          <h4>Choose before Pressing the Upload button</h4>
+          
         </div>
       );
     }
@@ -136,33 +127,38 @@ class UploadFile extends Component {
   render() {
     return (
       <div>
-        <h1 className='text-center'>Dodaj Pliki</h1>
-        <h3>
-          File Upload using React!
-              </h3>
+        <h1 className='text-center'>Tworzenie nowej edycji</h1>
+        <h3>Dodaj pliki nowej edycji</h3>
         <div>
           <div>
-            <label>Koordynatorzy</label>
+            <label>Koordynatorzy:</label>
+            <br></br>
             <input type="file" accept=".csv" onChange={this.onFile1Change} />
             {this.file1Data()}
           </div>
           <div>
-            <label>Umowy</label>
+            <label>Umowy:</label>
+            <br></br>
             <input type="file" accept=".csv" onChange={this.onFile2Change} />
             {this.file2Data()}
           </div>
           <div>
-            <label>Zgłoszenia</label>
+            <label>Zgłoszenia:</label>
+            <br></br>
             <input type="file" accept=".csv" onChange={this.onFile3Change} />
             {this.file3Data()}
           </div>
           <div>
-            <label>Rok edycji</label>
+            <label>Rok edycji:</label>
+            <br></br>
             <input type="text" id="year" name="year" onChange={this.takeYear} placeholder="Rok edycji" />
           </div>
-          <button onClick={this.onFileUpload}>
-            Upload!
-                  </button>
+          <br></br>
+          <div>
+          <Button variant="outline-primary" onClick={this.onFileUpload}>
+            Stwórz edycję
+                  </Button>
+                  </div>
         </div>
 
       </div>

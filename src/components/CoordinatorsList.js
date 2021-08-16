@@ -33,7 +33,7 @@ class CoordinatorsList extends Component {
     render() {
         return (
             <div>
-                <h1 className = 'text-center'>Coordinators List</h1>
+                <h1 className = 'text-center'>Lista Koordynatorów</h1>
                 <table className = 'table table-striped'>
                     <thead>
                         <tr>

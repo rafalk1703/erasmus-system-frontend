@@ -7,6 +7,10 @@ class CoordinatorsService {
     getAllCoordinators() {
         return axios.get(ALL_COORDINATORS_REST_API_URL);
     }
+
+    getAllCoordinatorsEdition(year) {
+        return axios.get(ALL_COORDINATORS_REST_API_URL + "/" + year);
+    }
 }
 
 

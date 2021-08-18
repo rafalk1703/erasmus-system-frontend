@@ -3,6 +3,11 @@
     margin-top: 1%;
 }
 
+#degree-switch {
+    float: left;
+    margin-left: 10px;
+}
+
 #submit-button {
     margin: 0 10px 25px 0;
     float: right;

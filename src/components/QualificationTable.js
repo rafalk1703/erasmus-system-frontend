@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, CardColumns, Row, Col, Button, Container, ProgressBar, FormCheck, Badge} from "react-bootstrap";
+import {Card, CardColumns, Row, Col, Button, Container, ProgressBar, FormCheck, Badge, Nav} from "react-bootstrap";
 import QualificationService from '../services/QualificationService';
 import "./QualificationTable.css";
 
@@ -11,7 +11,8 @@ class QualificationTable extends React.Component {
             contracts: [],
             studentsRegistrations: {},
             markedRegistrationsFlags: {},
-            isSthMarked: false
+            isSthMarked: false,
+            selectedDegree: "1"
         }
         this.saveQualification = this.saveQualification.bind(this);
     }
@@ -61,13 +62,25 @@ class QualificationTable extends React.Component {
         return (
             <div>
                 <h1 id='header'>Kwalifikacja Studentów</h1>
+                <Nav variant="tabs" className="flex-row" id="degree-switch" defaultActiveKey="1">
+                    <Nav.Item>
+                        <Nav.Link eventKey="1" onSelect={() => this.setState({selectedDegree: "1"})}>
+                            I stopień
+                        </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link eventKey="2" onSelect={() => this.setState({selectedDegree: "2"})}>
+                            II stopień
+                        </Nav.Link>
+                    </Nav.Item>
+                </Nav>
                 <Button variant="outline-primary" id="submit-button" type="submit" onClick={this.saveQualification}>
                     Zapisz zmiany
                 </Button>
                 <Container id="container">
                     <Row xs={1} md={3} className="g-4">
                         {
-                            this.state.contracts.map(
+                            this.state.contracts.filter(contract => contract.degree === this.state.selectedDegree).map(
                                 contract =>
                                     <Col>
                                         <Card bg={'light'}>
@@ -169,6 +182,7 @@ class QualificationTable extends React.Component {
                                             </CardColumns>
                                             <Card.Footer>
                                                     <ProgressBar id="progress"
+                                                                 key={contract.id}
                                                                  variant="success"
                                                                  now={contract.acceptedStudentsAmount / contract.vacancies * 100}
                                                                  label={`${contract.acceptedStudentsAmount} z ${contract.vacancies}`}

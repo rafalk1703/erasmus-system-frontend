@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import QualificationTable from '../components/QualificationTable';
 
 class Qualification extends Component {
   render() {
     return (
-      <div className='qualification'>
-        <h1>Qualification</h1>
-      </div>
+        <div className='container'>
+            <QualificationTable/>
+        </div>
     );
   }
 }

@@ -1,0 +1,82 @@
+#header {
+    text-align: center;
+    margin-top: 1%;
+}
+
+#degree-switch {
+    float: left;
+    margin-left: 10px;
+}
+
+#submit-button {
+    margin: 0 10px 25px 0;
+    float: right;
+}
+
+#container {
+    margin-bottom: 2%;
+    float: left;
+}
+
+#reg-card {
+    border-radius: 0;
+    border-color:  	#E0E0E0;
+}
+
+#reg-div {
+    margin: 2px;
+}
+
+#square-priority {
+    text-align: center;
+    line-height: 50px;
+}
+
+#select-box {
+    float: left;
+    margin-top: 1px;
+}
+
+#student-data {
+    float: left;
+}
+
+#plus-minus {
+    height: 40px;
+    width:  40px;
+    text-align: center;
+    margin: 10px;
+    float: right;
+}
+
+#warning-badge {
+    color: #000000;
+    background-color: #ffba00;
+}
+
+#conflict-badge {
+    color: white;
+    background-color: #ff4500;
+}
+
+#assignment-badge {
+    color: white;
+    background-color: #2e8b57;
+}
+
+#progress {
+    height: 20px;
+}
+
+.square {
+    height: 50px;
+    width: 50px;
+    float: left;
+    margin: 5px 15px 5px 5px;
+    border-radius: 3px;
+}
+
+.badge {
+    margin-bottom: 10px;
+    margin-left: 23px;
+}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CoordinatorsService from '../services/CoordinatorsService';
+import EditionService from '../services/EditionService';
 
 
 class CoordinatorsList extends Component {
@@ -12,21 +13,32 @@ class CoordinatorsList extends Component {
     }
 
     componentDidMount() {
-        CoordinatorsService.getAllCoordinators().then((response) => {
-            this.setState({ coordinators: response.data.body })
-        });
+
+        try {
+            (async () => {
+                await EditionService.getActiveEdition().then((response1) => {
+                    CoordinatorsService.getAllCoordinatorsEdition(response1.data.year).then((response) => {
+                        this.setState({ coordinators: response.data.body })
+                    });
+
+
+                });
+            })()
+        } catch (err) {
+
+        }
+    
     }
 
     render() {
         return (
             <div>
-                <h1 className = 'text-center'>Coordinators List</h1>
+                <h1 className = 'text-center'>Lista Koordynatorów</h1>
                 <table className = 'table table-striped'>
                     <thead>
                         <tr>
-                            <td>Contract Id</td>
-                            <td>Name</td>
-                            <td>Code</td>
+                            <td>Imię</td>
+                            <td>Kod</td>
                             <td>Email</td>
                         </tr>
                     </thead>
@@ -35,7 +47,6 @@ class CoordinatorsList extends Component {
                             this.state.coordinators.map(
                                 coordinator => 
                                 <tr key = {coordinator.id}>
-                                    <td> {coordinator.id} </td>
                                     <td> {coordinator.name} </td>
                                     <td> {coordinator.code} </td>
                                     <td> {coordinator.email} </td>

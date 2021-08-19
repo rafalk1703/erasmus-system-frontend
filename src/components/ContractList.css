@@ -3,3 +3,29 @@
     padding-right: 10em;
     padding-bottom: 5em;
   }
+
+ul {
+    list-style-type: none;
+  }
+
+
+  .select { 
+    
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    
+    }
+
+
+#filter-box {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  width: 30%;
+  background-color: #f2f2f2;
+  border: 15px;
+  border-radius: 20px;
+}
+
+  

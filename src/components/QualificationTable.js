@@ -12,7 +12,7 @@ class QualificationTable extends React.Component {
             studentsRegistrations: {},
             markedRegistrationsFlags: {},
             isSthMarked: false,
-            selectedDegree: "1"
+            selectedDegree: "1st"
         }
         this.saveQualification = this.saveQualification.bind(this);
     }
@@ -62,15 +62,20 @@ class QualificationTable extends React.Component {
         return (
             <div>
                 <h1 id='header'>Kwalifikacja Studentów</h1>
-                <Nav variant="tabs" className="flex-row" id="degree-switch" defaultActiveKey="1">
+                <Nav variant="tabs" className="flex-row" id="degree-switch" defaultActiveKey="1st">
                     <Nav.Item>
-                        <Nav.Link eventKey="1" onSelect={() => this.setState({selectedDegree: "1"})}>
+                        <Nav.Link eventKey="1st" onSelect={() => this.setState({selectedDegree: "1st"})}>
                             I stopień
                         </Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link eventKey="2" onSelect={() => this.setState({selectedDegree: "2"})}>
+                        <Nav.Link eventKey="2st" onSelect={() => this.setState({selectedDegree: "2st"})}>
                             II stopień
+                        </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link eventKey="3st" onSelect={() => this.setState({selectedDegree: "3st"})}>
+                            III stopień
                         </Nav.Link>
                     </Nav.Item>
                 </Nav>

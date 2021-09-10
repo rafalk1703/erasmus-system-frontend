@@ -19,24 +19,24 @@ class EditionService {
         return axios.get(ALL_EDITIONS_REST_API_URL);
     }
 
-    getAllEditionsByYear(year) {
+    getAllEditionsByYear() {
         return axios.get(ALL_EDITIONS_REST_API_URL);
     }
 
-    deleteEdition(year) {
-        return axios.get(DELETE_EDITION_REST_API_URL + "/" + year);
+    deleteEdition(id) {
+        return axios.get(DELETE_EDITION_REST_API_URL + "/" + id);
     }
 
-    addNewEdition(year, data) {
-        return axios.post(ADD_NEW_EDITION_REST_API_URL + "/" + year, data);
+    addNewEdition(data) {
+        return axios.post(ADD_NEW_EDITION_REST_API_URL, data);
     }
 
-    deactiveEdition(year) {
-        return axios.get(DEACTIVE_EDITION_REST_API_URL + "/" + year);
+    deactiveEdition(id) {
+        return axios.get(DEACTIVE_EDITION_REST_API_URL + "/" + id);
     }
 
-    getStatistics(year) {
-        return axios.get(STATISTICS_REST_API_URL + "/" + year);
+    getStatistics(id) {
+        return axios.get(STATISTICS_REST_API_URL + "/" + id);
     }
 
     getActiveEdition() {

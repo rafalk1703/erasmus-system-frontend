@@ -25,7 +25,7 @@ class ContractsList extends Component {
         try {
             (async () => {
                 await EditionService.getActiveEdition().then((response1) => {
-                    ContractService.getAllContractsByEdition(response1.data.year).then((response) => {
+                    ContractService.getAllContractsByEdition(response1.data.id).then((response) => {
                         this.setState({
                             all: response.data.body,
                             contracts: response.data.body

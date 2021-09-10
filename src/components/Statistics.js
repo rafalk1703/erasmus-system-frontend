@@ -15,7 +15,7 @@ class Statistics extends Component {
     }
 
     componentDidMount() {
-        EditionService.getStatistics(this.props.year).then((response) => {
+        EditionService.getStatistics(this.props.id).then((response) => {
             this.setState({
                 numberOfContracts: response.data.numberOfContracts,
                 numberOfRegistrations: response.data.numberOfRegistrations,
@@ -34,7 +34,7 @@ class Statistics extends Component {
 
         return (
             <div>
-                <h1 className='text-center'>Statystyki Edycji {this.props.year}</h1>
+                <h1 className='text-center'>Statystyki Edycji {this.props.id}</h1>
 
                 <ListGroup>
                     <ListGroup.Item>Liczba umów: <b>{this.state.numberOfContracts}</b></ListGroup.Item>

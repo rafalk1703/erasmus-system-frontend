@@ -8,8 +8,8 @@ class ContractService {
         return axios.get(ALL_CONTRACTS_REST_API_URL);
     }
 
-    getAllContractsByEdition(year) {
-        return axios.get(ALL_CONTRACTS_REST_API_URL + "/" + year);
+    getAllContractsByEdition(id) {
+        return axios.get(ALL_CONTRACTS_REST_API_URL + "/" + id);
     }
 }
 

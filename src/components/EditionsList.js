@@ -18,14 +18,14 @@ class EditionsList extends Component {
         this.deactiveEdition = this.deactiveEdition.bind(this);
     }
 
-    deleteEdition(year) {
-        EditionService.deleteEdition(year).then(res => {
-            this.setState({ editions: this.state.editions.filter(editions => editions.year !== year) })
+    deleteEdition(id) {
+        EditionService.deleteEdition(id).then(res => {
+            this.setState({ editions: this.state.editions.filter(editions => editions.id !== id) })
         });
     }
 
-    deactiveEdition(year) {
-        EditionService.deactiveEdition(year).then(res => {
+    deactiveEdition(id) {
+        EditionService.deactiveEdition(id).then(res => {
             this.setState({})
         });
         window.location.reload();
@@ -70,8 +70,8 @@ class EditionsList extends Component {
                                             <Link to={`/editionStatistics/${editions.year}`}>
                                                 <Button id="details" variant="outline-primary">Szczegóły Edycji</Button>
                                             </Link>
-                                            <Button onClick={() => this.deleteEdition(editions.year)} id="delete" variant="outline-primary">Usuń Edycję</Button>
-                                            <Button onClick={() => this.deactiveEdition(editions.year)} id="deactive" variant="outline-primary">Archiwizuj Edycję</Button>
+                                            <Button onClick={() => this.deleteEdition(editions.id)} id="delete" variant="outline-primary">Usuń Edycję</Button>
+                                            <Button onClick={() => this.deactiveEdition(editions.id)} id="deactive" variant="outline-primary">Archiwizuj Edycję</Button>
                                         </td>
                                     </tr>
                             )

@@ -8,8 +8,8 @@ class CoordinatorsService {
         return axios.get(ALL_COORDINATORS_REST_API_URL);
     }
 
-    getAllCoordinatorsEdition(year) {
-        return axios.get(ALL_COORDINATORS_REST_API_URL + "/" + year);
+    getAllCoordinatorsEdition(id) {
+        return axios.get(ALL_COORDINATORS_REST_API_URL + "/" + id);
     }
 }
 

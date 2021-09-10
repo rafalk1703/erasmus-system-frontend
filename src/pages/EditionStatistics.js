@@ -6,7 +6,7 @@ class EditionStatistics extends Component {
   render() {
     return (
       <div className="container">
-      <Statistics year={this.props.match.params.year}/>
+      <Statistics id={this.props.match.params.id} />
       </div>
     );
   }

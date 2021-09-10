@@ -17,7 +17,7 @@ class CoordinatorsList extends Component {
         try {
             (async () => {
                 await EditionService.getActiveEdition().then((response1) => {
-                    CoordinatorsService.getAllCoordinatorsEdition(response1.data.year).then((response) => {
+                    CoordinatorsService.getAllCoordinatorsEdition(response1.data.id).then((response) => {
                         this.setState({ coordinators: response.data.body })
                     });
 

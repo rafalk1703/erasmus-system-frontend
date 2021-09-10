@@ -49,6 +49,7 @@ class UploadFile extends Component {
 
     const formData = new FormData();
 
+    formData.append("edition_year", this.state.year);
     formData.append("coordinators_file", this.state.coordinatorsFile);
     formData.append("contracts_file", this.state.contractsFile);
     formData.append("registrations_file", this.state.registrationsFile);
@@ -58,7 +59,7 @@ class UploadFile extends Component {
     console.log(this.state.registrationsFile);
 
 
-    EditionService.addNewEdition(this.state.year, formData);
+    EditionService.addNewEdition(formData);
 
     window.location.href = "/editions";
     // axios.post("http://localhost:8080/api/edition/add/" + this.state.year, formData); 

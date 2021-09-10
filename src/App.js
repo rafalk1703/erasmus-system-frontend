@@ -26,7 +26,7 @@ class App extends Component {
           <Route path='/qualification' component={Qualification} />
           <Route path='/editions' component={Editions} />
           <Route path='/newEdition' component={NewEdition} />
-          <Route path='/editionStatistics/:year' component={EditionStatistics} />
+          <Route path='/editionStatistics/:id' component={EditionStatistics} />
         </Switch>
       </Router>
     </>

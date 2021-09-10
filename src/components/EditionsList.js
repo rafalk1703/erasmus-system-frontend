@@ -67,7 +67,7 @@ class EditionsList extends Component {
                                         <td> {editions.id} </td>
                                         <td> {editions.year} </td>
                                         <td>
-                                            <Link to={`/editionStatistics/${editions.year}`}>
+                                            <Link to={`/editionStatistics/${editions.id}`}>
                                                 <Button id="details" variant="outline-primary">Szczegóły Edycji</Button>
                                             </Link>
                                             <Button onClick={() => this.deleteEdition(editions.id)} id="delete" variant="outline-primary">Usuń Edycję</Button>

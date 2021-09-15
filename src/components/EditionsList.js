@@ -70,6 +70,7 @@ class EditionsList extends Component {
                                             <Link to={`/editionStatistics/${editions.id}`}>
                                                 <Button id="details" variant="outline-primary">Szczegóły Edycji</Button>
                                             </Link>
+                                            <a download href={"http://localhost:8080/api/file/generate/" + editions.id} id="generate" variant="outline-primary">Pobierz Listę</a>
                                             <Button onClick={() => this.deleteEdition(editions.id)} id="delete" variant="outline-primary">Usuń Edycję</Button>
                                             <Button onClick={() => this.deactiveEdition(editions.id)} id="deactive" variant="outline-primary">Archiwizuj Edycję</Button>
                                         </td>

@@ -12,6 +12,8 @@ const STATISTICS_REST_API_URL = 'http://localhost:8080/api/edition/statistics/';
 
 const ACTIVE_EDITION = 'http://localhost:8080/api/edition/active';
 
+const GENERATE_FILE_BY_EDITION = 'http://localhost:8080/api/file/generate/';
+
 
 class EditionService {
 
@@ -41,6 +43,10 @@ class EditionService {
 
     getActiveEdition() {
         return axios.get(ACTIVE_EDITION);
+    }
+
+    generateFileByEdition(id) {
+        return axios.get(GENERATE_FILE_BY_EDITION + "/" + id);
     }
 }
 

@@ -3,7 +3,7 @@ table tr td:nth-child(4) {
 }
 
 
-#delete, #details, #generate{
+#delete, #details, #generate, #generate_wieit{
     display: inline-block;
     margin-right: 10px;
  }

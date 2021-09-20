@@ -1,6 +1,7 @@
 import React from "react";
 import {Form, Button, Spinner} from "react-bootstrap";
-import axios from "axios";
+import Cookies from "js-cookie";
+import LoginService from "../services/LoginService";
 
 class Login extends React.Component {
     constructor(props) {
@@ -22,15 +23,19 @@ class Login extends React.Component {
         event.preventDefault();
         this.setState({loading: true});
 
-        let url = "http://localhost:8080/api/login";
         let loginData = {
             "email": this.state.email,
             "password": this.state.password
         };
-        axios.post(url,loginData).then(response => {
+        LoginService.login(loginData).then(response => {
             this.setState({loading: false});
             if (response.status === 200) {
-
+                Cookies.set('email',this.state.email);
+                this.props.history.push({
+                    pathname: '/'
+                });
+                console.log('setting cookies ' + response.data);
+                Cookies.set('sessionID',response.data);
             } else {
                 throw new Error(response.status.toString());
             }

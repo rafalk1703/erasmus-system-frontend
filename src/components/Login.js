@@ -2,6 +2,7 @@ import React from "react";
 import {Form, Button, Spinner} from "react-bootstrap";
 import Cookies from "js-cookie";
 import LoginService from "../services/LoginService";
+import "./Login.css"
 
 class Login extends React.Component {
     constructor(props) {
@@ -57,44 +58,46 @@ class Login extends React.Component {
         const loading = this.state.loading;
         const areCredentialsIsInvalid = this.state.areCredentialsIsInvalid;
         return (
-            <div className="Login">
-                <Form onSubmit={this.handleSubmit}>
-                    <Form.Group controlId="email">
-                        <Form.Label>Email w domenie agh.edu.pl</Form.Label>
-                        <Form.Control
-                            type="text"
-                            placeholder="Email"
-                            disabled={this.state.loading}
-                            value={this.state.email}
-                            onChange={this.handleChange}
-                        />
-                    </Form.Group>
-                    <Form.Group controlId="password">
-                        <Form.Label>Hasło</Form.Label>
-                        <Form.Control
-                            type="password"
-                            placeholder="Hasło"
-                            disabled={this.state.loading}
-                            value={this.state.password}
-                            onChange={this.handleChange}
-                        />
-                    </Form.Group>
-                    <Button
-                        block
-                        disabled={ !this.validateForm() || loading }
-                        type="submit">
+            <div>
+                <h1>Logowanie</h1>
+                <div className="Login">
+                    <Form onSubmit={this.handleSubmit}>
+                        <Form.Group id="field" controlId="email">
+                            <Form.Control
+                                type="text"
+                                placeholder="Adres e-mail w domenie agh.edu.pl"
+                                disabled={this.state.loading}
+                                value={this.state.email}
+                                onChange={this.handleChange}
+                            />
+                        </Form.Group>
+                        <Form.Group id="field" controlId="password">
+                            <Form.Control
+                                type="password"
+                                placeholder="Hasło"
+                                disabled={this.state.loading}
+                                value={this.state.password}
+                                onChange={this.handleChange}
+                            />
+                        </Form.Group>
+                        <Button
+                            id="submit"
+                            block
+                            disabled={ !this.validateForm() || loading }
+                            type="submit">
 
-                        { !loading && <span>Zaloguj</span> }
-                        { loading && <Spinner as="span"
-                                              animation="border"
-                                              size="sm"
-                                              role="status"
-                                              aria-hidden="true"
-                                              style={{marginRight: '20px'}} /> }
-                        { loading && <span>Logowanie...</span> }
-                    </Button>
-                    {areCredentialsIsInvalid ? <p style={{color:"red"}}>Podane dane logowania są nieprawidłowe!</p> : ""}
-                </Form>
+                            { !loading && <span id="text">Zaloguj się</span> }
+                            { loading && <Spinner as="span"
+                                                  animation="border"
+                                                  size="sm"
+                                                  role="status"
+                                                  aria-hidden="true"
+                                                  style={{marginRight: '20px'}} /> }
+                            { loading && <span>Logowanie...</span> }
+                        </Button>
+                        {areCredentialsIsInvalid ? <p id="message">Podane dane logowania są nieprawidłowe!</p> : ""}
+                    </Form>
+                </div>
             </div>
         );
     }

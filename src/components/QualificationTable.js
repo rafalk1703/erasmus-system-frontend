@@ -1,5 +1,6 @@
 import React from "react";
 import {Card, CardColumns, Row, Col, Button, Container, ProgressBar, FormCheck, Badge, Nav} from "react-bootstrap";
+import Cookies from "js-cookie";
 import QualificationService from '../services/QualificationService';
 import "./QualificationTable.css";
 
@@ -32,6 +33,7 @@ class QualificationTable extends React.Component {
         });
 
         let body = {
+            "sessionCode": Cookies.get('sessionCode'),
             "registrations": registrationsBody
         };
 

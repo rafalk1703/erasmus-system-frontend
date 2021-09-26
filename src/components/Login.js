@@ -36,11 +36,12 @@ class Login extends React.Component {
                     pathname: '/'
                 });
                 console.log('setting cookies ' + response.data);
-                Cookies.set('sessionID',response.data);
+                Cookies.set('sessionCode',response.data);
             } else {
                 throw new Error(response.status.toString());
             }
         }).catch( (error) => {
+            this.setState({loading: false});
             if (error.response.status === 401) {
                 this.setState({areCredentialsIsInvalid: true});
             }
@@ -91,8 +92,7 @@ class Login extends React.Component {
                                                   animation="border"
                                                   size="sm"
                                                   role="status"
-                                                  aria-hidden="true"
-                                                  style={{marginRight: '20px'}} /> }
+                                                  aria-hidden="true" /> }
                             { loading && <span>Logowanie...</span> }
                         </Button>
                         {areCredentialsIsInvalid ? <p id="message">Podane dane logowania są nieprawidłowe!</p> : ""}

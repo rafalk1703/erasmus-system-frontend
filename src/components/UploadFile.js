@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { FaThinkPeaks } from 'react-icons/fa';
 import { Button } from 'react-bootstrap';
+import Cookies from "js-cookie";
 import EditionService from '../services/EditionService'
 import "./UploadFile.css";
 
@@ -53,6 +54,7 @@ class UploadFile extends Component {
     formData.append("coordinators_file", this.state.coordinatorsFile);
     formData.append("contracts_file", this.state.contractsFile);
     formData.append("registrations_file", this.state.registrationsFile);
+    formData.append("session_code", Cookies.get('sessionCode'));
 
     console.log(this.state.coordinatorsFile);
     console.log(this.state.contractsFile);

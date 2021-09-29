@@ -20,7 +20,6 @@ class App extends Component {
         <Router>
           <Navbar2/>
           <Switch>
-            <Route path='/login' component={Login} />
             <Route path='/logout' component={Logout} />
             <Route path='/contracts' exact component={Contracts} />
             <Route path='/coordinators' component={Coordinators} />
@@ -28,6 +27,7 @@ class App extends Component {
             <Route path='/editions' component={Editions} />
             <Route path='/newEdition' component={NewEdition} />
             <Route path='/editionStatistics/:id' component={EditionStatistics} />
+            <Route path='/' component={Login} />
           </Switch>
         </Router>
       </>

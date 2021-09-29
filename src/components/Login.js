@@ -32,8 +32,15 @@ class Login extends React.Component {
             this.setState({loading: false});
             if (response.status === 200) {
                 Cookies.set('email',this.state.email);
+                const userToSend = {
+                    logged: true
+                };
                 this.props.history.push({
-                    pathname: '/'
+                    pathname: '/',
+                    state: {
+                        email: this.state.email,
+                        user: userToSend
+                    }
                 });
                 console.log('setting cookies ' + response.data);
                 Cookies.set('sessionCode',response.data);

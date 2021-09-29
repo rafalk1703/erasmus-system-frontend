@@ -5,7 +5,9 @@ class Logout extends React.Component {
     render() {
         return (
           <div className="Logout">
-              <h1>Nastąpiło wylogowanie z systemu</h1>
+              <h3 style={{ color: '#8B0000', textAlign: 'center'}}>
+                  Nastąpiło wylogowanie z systemu!
+              </h3>
               <Login/>
           </div>
         );

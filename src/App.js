@@ -9,6 +9,8 @@ import Qualification from './pages/Qualification';
 import Editions from './pages/Editions';
 import NewEdition from './pages/NewEdition';
 import EditionStatistics from './pages/EditionStatistics';
+import EditEdition from './pages/EditEdition';
+
 
 
 
@@ -27,6 +29,7 @@ class App extends Component {
           <Route path='/editions' component={Editions} />
           <Route path='/newEdition' component={NewEdition} />
           <Route path='/editionStatistics/:id' component={EditionStatistics} />
+          <Route path='/editEdition/:id' component={EditEdition} />
         </Switch>
       </Router>
     </>

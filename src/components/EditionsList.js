@@ -54,8 +54,7 @@ class EditionsList extends Component {
                     <thead>
                         <tr>
                             <td>Czy aktywna</td>
-                            <td>Id edycji</td>
-                            <td>Rok</td>
+                            <td>Edycja</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -64,7 +63,6 @@ class EditionsList extends Component {
                                 editions =>
                                     <tr key={editions.id}>
                                         <td>{renderIsActive(editions.isActive)}</td>
-                                        <td> {editions.id} </td>
                                         <td> {editions.year} </td>
                                         <td>
                                             <Link to={`/editEdition/${editions.id}`}>
@@ -76,8 +74,9 @@ class EditionsList extends Component {
 
                                             <Button onClick={() => this.deleteEdition(editions.id)} id="delete" variant="outline-primary">Usuń Edycję</Button>
                                             <Button onClick={() => this.deactiveEdition(editions.id)} id="deactive" variant="outline-primary">Archiwizuj Edycję</Button>
-
-                                            <a download href={"http://localhost:8080/api/file/generate/" + editions.id} id="generate" variant="outline-primary">Pobierz Listę spoza WIEIT</a>
+                                        </td>
+                                        <td>
+                                            <a download href={"http://localhost:8080/api/file/generate/" + editions.id} id="generate" variant="outline-primary">Pobierz Listę spoza WIEIT</a><br/>
                                             <a download href={"http://localhost:8080/api/file/generate/WIEIT/" + editions.id} id="generate_wieit" variant="outline-primary">Pobierz Listę WIEIT</a>
                                         </td>
                                     </tr>

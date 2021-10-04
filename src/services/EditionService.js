@@ -15,6 +15,8 @@ const ACTIVE_EDITION = 'http://localhost:8080/api/edition/active';
 
 const GENERATE_FILE_BY_EDITION = 'http://localhost:8080/api/file/generate/';
 
+const EDIT_EDITION= 'http://localhost:8080/api/edition/update';
+
 class EditionService {
 
     getAllEditions() {
@@ -47,6 +49,10 @@ class EditionService {
 
     generateFileByEdition(id) {
         return axios.get(GENERATE_FILE_BY_EDITION + "/" + id, { headers: {'Session-Code': Cookies.get('sessionCode')} });
+    }
+
+    editEdition(data) {
+        return axios.post(EDIT_EDITION, data);
     }
 }
 

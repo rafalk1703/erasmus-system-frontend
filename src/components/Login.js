@@ -1,5 +1,6 @@
 import React from "react";
 import {Form, Button, Spinner} from "react-bootstrap";
+import { withRouter } from "react-router-dom";
 import Cookies from "js-cookie";
 import LoginService from "../services/LoginService";
 import "./Login.css"
@@ -39,11 +40,13 @@ class Login extends React.Component {
                     pathname: '/',
                     state: {
                         email: this.state.email,
-                        user: userToSend
+                        user: userToSend,
+                        coordinatorRole: response.data.coordinatorRole
                     }
                 });
-                console.log('setting cookies ' + response.data);
-                Cookies.set('sessionCode',response.data);
+                console.log('setting cookies ' + response.data.sessionCode);
+                Cookies.set('sessionCode', response.data.sessionCode);
+                window.location.reload();
             } else {
                 throw new Error(response.status.toString());
             }
@@ -110,4 +113,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default withRouter(Login);

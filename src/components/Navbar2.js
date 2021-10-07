@@ -1,7 +1,9 @@
 import React , {useEffect} from 'react'
+import { Button } from "react-bootstrap";
+import {Link, NavLink} from 'react-router-dom';
 import './Navbar2.css';
-import { NavLink } from 'react-router-dom';
 import $ from 'jquery';
+import Cookies from "js-cookie";
 
 const Navbar2 = () => {
 
@@ -42,6 +44,11 @@ const Navbar2 = () => {
     });
     
   }, []);
+
+  function logout() {
+      Cookies.remove('email');
+      Cookies.remove('sessionCode');
+  }
 
   return (
   <nav className="navbar navbar-expand-lg navbar-mainbg">
@@ -101,6 +108,18 @@ const Navbar2 = () => {
             </li>
         </ul>
       </div>
+
+      { Cookies.get('sessionCode') !== undefined ?
+          <div>
+              <p style={{color: "white", float: "left", margin: '25px'}}>{Cookies.get('email')}</p>
+              <Link to="/logout">
+                  <Button variant="secondary" style={{margin: '20px'}} onClick={function(){logout();}}>
+                      Wyloguj się!
+                  </Button>
+              </Link>
+          </div>
+          : ""
+      }
   </nav>
   )
 }

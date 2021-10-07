@@ -1,6 +1,8 @@
 import React from "react";
-import {Button} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import Cookies from "js-cookie";
+import Login from "../components/Login";
+import Navbar2 from "../components/Navbar2";
 
 class MainPage extends React.Component {
 
@@ -22,24 +24,23 @@ class MainPage extends React.Component {
         };
     }
 
-    logout() {
-        Cookies.remove('sessionCode');
-        Cookies.remove('email');
-    }
-
     render() {
         const user = this.state.user;
         return (
             <div>
-                { user.logged || Cookies.get('sessionCode') !== undefined ?
+                { !user.logged && Cookies.get('sessionCode') === undefined ?
                     <div>
-                        <p>{`Jesteś zalogowany jako: ${Cookies.get('email')}`}</p>
-                        <Link to="/logout">
-                            <Button onClick={this.logout}>
-                                Wyloguj się!
-                            </Button>
-                        </Link>
+                        <nav className="navbar navbar-expand-lg navbar-mainbg">
+                            <NavLink className="navbar-brand navbar-logo" to="/" exact>
+                                Erasmus System
+                            </NavLink>
+                        </nav>
+                        <Login/>
                     </div>
+                    : ""
+                }
+                { user.logged || Cookies.get('sessionCode') !== undefined ?
+                    <Navbar2/>
                     : ""
                 }
             </div>

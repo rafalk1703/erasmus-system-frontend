@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
 import Navbar2 from './components/Navbar2';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, NavLink } from 'react-router-dom';
 import Contracts from './pages/Contracts';
 import Coordinators from './pages/Coordinators';
 import Qualification from './pages/Qualification';
@@ -11,7 +11,7 @@ import NewEdition from './pages/NewEdition';
 import EditionStatistics from './pages/EditionStatistics';
 import EditEdition from './pages/EditEdition';
 import MainPage from "./pages/MainPage";
-import Logout from "./pages/Logout";
+import Cookies from "js-cookie";
 
 class App extends Component {
 
@@ -19,9 +19,17 @@ class App extends Component {
     return (
       <>
         <Router>
+          { Cookies.get('sessionCode') === undefined ?
+              <nav className="navbar navbar-expand-lg navbar-mainbg">
+                <NavLink className="navbar-brand navbar-logo" to="/" exact>
+                  Erasmus System
+                </NavLink>
+              </nav>
+              :
+              <Navbar2/>
+          }
           <Switch>
             <Route path='/' exact component={MainPage} />
-            <Route path='/logout' component={Logout} />
             <Route path='/contracts' component={Contracts} />
             <Route path='/coordinators' component={Coordinators} />
             <Route path='/qualification' component={Qualification} />

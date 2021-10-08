@@ -1,6 +1,5 @@
-import React , {useEffect} from 'react'
-import { Button } from "react-bootstrap";
-import {Link, NavLink} from 'react-router-dom';
+import React, { useEffect } from 'react'
+import { NavLink } from 'react-router-dom';
 import './Navbar2.css';
 import $ from 'jquery';
 import Cookies from "js-cookie";
@@ -45,11 +44,6 @@ const Navbar2 = () => {
     
   }, []);
 
-  function logout() {
-      Cookies.remove('email');
-      Cookies.remove('sessionCode');
-  }
-
   return (
   <nav className="navbar navbar-expand-lg navbar-mainbg">
     
@@ -75,8 +69,15 @@ const Navbar2 = () => {
               <div className="left"></div>
               <div className="right"></div>
             </div>
-            
+
             <li className="nav-item active">
+                <NavLink className="nav-link" to="/" exact>
+                    <i className="fas fa-tachometer-alt">
+                    </i>Strona Główna
+                </NavLink>
+            </li>
+
+            <li className="nav-item">
               <NavLink className="nav-link" to="/contracts" exact>
                 <i 
                 className="fas fa-tachometer-alt">
@@ -84,6 +85,7 @@ const Navbar2 = () => {
               </NavLink>
             </li>
 
+            { Cookies.get('coordinatorRole') === 'DEPARTMENT' ?
             <li className="nav-item">
               <NavLink className="nav-link" to="/coordinators" exact>
                 <i 
@@ -91,6 +93,8 @@ const Navbar2 = () => {
                 </i>Koordynatorzy Umów
               </NavLink> 
             </li>
+                : ""
+            }
 
             <li className="nav-item">
               <NavLink className="nav-link" to="/qualification" exact>
@@ -99,6 +103,8 @@ const Navbar2 = () => {
                 </i>Kwalifikacja Studentów
               </NavLink>
             </li>
+
+            { Cookies.get('coordinatorRole') === 'DEPARTMENT' ?
             <li className="nav-item">
               <NavLink className="nav-link" to="/editions" exact>
                 <i 
@@ -106,20 +112,10 @@ const Navbar2 = () => {
                 </i>Lista Edycji
               </NavLink>
             </li>
+                : ""
+            }
         </ul>
       </div>
-
-      { Cookies.get('sessionCode') !== undefined ?
-          <div>
-              <p style={{color: "white", float: "left", margin: '25px'}}>{Cookies.get('email')}</p>
-              <Link to="/logout">
-                  <Button variant="secondary" style={{margin: '20px'}} onClick={function(){logout();}}>
-                      Wyloguj się!
-                  </Button>
-              </Link>
-          </div>
-          : ""
-      }
   </nav>
   )
 }

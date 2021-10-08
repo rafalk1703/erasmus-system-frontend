@@ -32,20 +32,10 @@ class Login extends React.Component {
         LoginService.login(loginData).then(response => {
             this.setState({loading: false});
             if (response.status === 200) {
-                Cookies.set('email',this.state.email);
-                const userToSend = {
-                    logged: true
-                };
-                this.props.history.push({
-                    pathname: '/',
-                    state: {
-                        email: this.state.email,
-                        user: userToSend,
-                        coordinatorRole: response.data.coordinatorRole
-                    }
-                });
-                console.log('setting cookies ' + response.data.sessionCode);
+                Cookies.set('email', this.state.email);
+                Cookies.set('coordinatorRole', response.data.coordinatorRole);
                 Cookies.set('sessionCode', response.data.sessionCode);
+                console.log('setting cookies ' + response.data.sessionCode);
                 window.location.reload();
             } else {
                 throw new Error(response.status.toString());

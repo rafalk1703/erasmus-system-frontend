@@ -2,6 +2,7 @@ import React from "react";
 import {Card, CardColumns, Row, Col, Button, Container, ProgressBar, FormCheck, Badge, Nav} from "react-bootstrap";
 import Cookies from "js-cookie";
 import QualificationService from '../services/QualificationService';
+import EditionService from "../services/EditionService";
 import "./QualificationTable.css";
 
 class QualificationTable extends React.Component {
@@ -41,13 +42,18 @@ class QualificationTable extends React.Component {
     }
 
     componentDidMount() {
-        QualificationService.getQualification().then(response => {
-            this.setState({contracts: response.data.contracts,
-                                studentsRegistrations: response.data.studentsRegistrations}
-            )
-        }).catch(function (error) {
-            console.log(error);
-        });
+        try {
+            (async () => {
+                await EditionService.getActiveEdition().then((response1) => {
+                    QualificationService.getQualificationByEdition(response1.data.id).then((response) => {
+                        this.setState({
+                            contracts: response.data.contracts,
+                            studentsRegistrations: response.data.studentsRegistrations
+                        })
+                    });
+                });
+            })()
+        } catch (err) {}
     }
 
     render() {

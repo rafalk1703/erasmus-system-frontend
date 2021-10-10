@@ -9,7 +9,7 @@ class CoordinatorsService {
         return axios.get(ALL_COORDINATORS_REST_API_URL, { headers: {'Session-Code': Cookies.get('sessionCode')} });
     }
 
-    getAllCoordinatorsEdition(id) {
+    getAllCoordinatorsByEdition(id) {
         return axios.get(ALL_COORDINATORS_REST_API_URL + "/" + id, { headers: {'Session-Code': Cookies.get('sessionCode')} });
     }
 }

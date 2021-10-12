@@ -3,6 +3,7 @@ import ContractService from '../services/ContractService';
 import { Accordion, Card, Button } from "react-bootstrap";
 import { MenuItem, InputLabel } from '@material-ui/core';
 import Select from "react-select";
+import Cookies from "js-cookie";
 import "./ContractList.css";
 import EditionService from '../services/EditionService';
 
@@ -152,17 +153,28 @@ class ContractsList extends Component {
 
         return (
             <div>
-                <h1 className='text-center'>Lista Kontraktów</h1>
+                { Cookies.get('coordinatorRole') === 'DEPARTMENT' ?
+                    <h1 className='text-center'>Lista wszystkich kontraktów</h1>
+                    : Cookies.get('coordinatorRole') === 'CONTRACTS' ?
+                        <h1 className='text-center'>Lista moich kontraktów</h1>
+                        : ""
+                }
                 <div className='text-center' id="filter-box">
                     <br></br>
-                    <div class='select' id="filter-select">
-                        <InputLabel id="label">Wydział:</InputLabel>
-                        <Select options={facultyOptions} onChange={this.filteringFacultys} placeholder="All" />
-                    </div>
-                    <div class='select' id="filter-text">
-                        <InputLabel id="label">Koordynator:</InputLabel>
-                        <Select options={coordinatorOptions} onChange={this.filteringCoordinators} placeholder="All" />
-                    </div>
+                    { Cookies.get('coordinatorRole') === 'DEPARTMENT' ?
+                        <div>
+                            <div class='select' id="filter-select">
+                                <InputLabel id="label">Wydział:</InputLabel>
+                                <Select options={facultyOptions} onChange={this.filteringFacultys} placeholder="All"/>
+                            </div>
+                            <div class='select' id="filter-text">
+                                <InputLabel id="label">Koordynator:</InputLabel>
+                                <Select options={coordinatorOptions} onChange={this.filteringCoordinators}
+                                        placeholder="All"/>
+                            </div>
+                        </div>
+                        : ""
+                    }
                     <div class='select' id="filter-text">
                         <InputLabel id="label">Stopień:</InputLabel>
                         <Select options={degreeOptions} onChange={this.filteringDegree} placeholder="All" />

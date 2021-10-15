@@ -97,6 +97,13 @@ const Navbar2 = () => {
             }
 
             <li className="nav-item">
+                <NavLink className="nav-link" to="/students" exact>
+                    <i className="far fa-clone">
+                    </i>Studenci
+                </NavLink>
+            </li>
+
+            <li className="nav-item">
               <NavLink className="nav-link" to="/qualification" exact>
                 <i 
                 className="far fa-clone">

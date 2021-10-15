@@ -11,6 +11,7 @@ import NewEdition from './pages/NewEdition';
 import EditionStatistics from './pages/EditionStatistics';
 import EditEdition from './pages/EditEdition';
 import MainPage from "./pages/MainPage";
+import Students from "./pages/Students";
 import Cookies from "js-cookie";
 
 class App extends Component {
@@ -32,6 +33,7 @@ class App extends Component {
             <Route path='/' exact component={MainPage} />
             <Route path='/contracts' component={Contracts} />
             <Route path='/coordinators' component={Coordinators} />
+            <Route path='/students' component={Students} />
             <Route path='/qualification' component={Qualification} />
             <Route path='/editions' component={Editions} />
             <Route path='/newEdition' component={NewEdition} />

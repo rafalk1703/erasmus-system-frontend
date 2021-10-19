@@ -48,7 +48,7 @@ class StudentsList extends Component {
                                                 <li>Miesiące pobytu: {student.periodOfStay}</li>
                                                 <li>Wcześniejszy udział: {student.earlierParticipation}</li>
                                                 <li>Średnia ocen: {student.averageGrade}</li>
-                                                <li>Zaliczony semestr: {student.ifCompletedSemester}</li>
+                                                <li>Adres: {student.address}</li>
                                                 <li>Język obcy: {student.foreignLanguage}</li>
                                                 <li>Rodzaj certyfikatu: {student.typeOfCertificate}</li>
                                                 <li>Poziom egzaminu: {student.examLevel}</li>

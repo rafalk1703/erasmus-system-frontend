@@ -43,12 +43,15 @@ class StudentsList extends Component {
                                                 <li>Wydział: {student.department}</li>
                                                 <li>Kierunek: {student.field}</li>
                                                 <li>Rok studiów: {student.year}</li>
+
                                                 <li>Adres e-mail: {student.email}</li>
                                                 <li>Numer telefonu: {student.phoneNumber}</li>
-                                                <li>Miesiące pobytu: {student.periodOfStay}</li>
-                                                <li>Wcześniejszy udział: {student.earlierParticipation}</li>
-                                                <li>Średnia ocen: {student.averageGrade}</li>
                                                 <li>Adres: {student.address}</li>
+
+                                                <li>Wcześniejszy udział: {student.earlierParticipation}</li>
+                                                <li>Miesiące pobytu: {student.periodOfStay}</li>
+                                                <li>Średnia ocen: {student.averageGrade}</li>
+
                                                 <li>Język obcy: {student.foreignLanguage}</li>
                                                 <li>Rodzaj certyfikatu: {student.typeOfCertificate}</li>
                                                 <li>Poziom egzaminu: {student.examLevel}</li>

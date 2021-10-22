@@ -3,9 +3,9 @@ import {Card, CardColumns, Row, Col, Button, Container, ProgressBar, FormCheck, 
 import Cookies from "js-cookie";
 import QualificationService from '../services/QualificationService';
 import EditionService from "../services/EditionService";
-import "./QualificationTable.css";
+import "./Qualification.css";
 
-class QualificationTable extends React.Component {
+class QualificationDepartment extends React.Component {
 
     constructor(props) {
         super(props)
@@ -212,4 +212,4 @@ class QualificationTable extends React.Component {
     }
 }
 
-export default QualificationTable;
+export default QualificationDepartment;

@@ -66,7 +66,7 @@ class Login extends React.Component {
                         <Form.Group id="field" controlId="email">
                             <Form.Control
                                 type="text"
-                                placeholder="Adres e-mail w domenie agh.edu.pl"
+                                placeholder="Login lub e-mail w domenie agh.edu.pl"
                                 disabled={this.state.loading}
                                 value={this.state.email}
                                 onChange={this.handleChange}

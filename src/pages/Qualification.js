@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
-import QualificationTable from '../components/QualificationTable';
+import QualificationContracts from "../components/QualificationContracts";
+import QualificationDepartment from '../components/QualificationDepartment';
+import Cookies from "js-cookie";
 
 class Qualification extends Component {
   render() {
     return (
         <div className='container'>
-            <QualificationTable/>
+            { Cookies.get('coordinatorRole') === 'CONTRACTS' ?
+                <QualificationContracts/>
+                : Cookies.get('coordinatorRole') === 'DEPARTMENT' ?
+                    <QualificationDepartment/>
+                    : ""
+            }
         </div>
     );
   }

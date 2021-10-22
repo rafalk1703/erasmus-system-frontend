@@ -77,11 +77,22 @@ const Navbar2 = () => {
                 </NavLink>
             </li>
 
+            { Cookies.get('coordinatorRole') === 'DEPARTMENT' ?
+                <li className="nav-item">
+                    <NavLink className="nav-link" to="/editions" exact>
+                        <i
+                            className="far fa-chart-bar">
+                        </i>Edycje
+                    </NavLink>
+                </li>
+                : ""
+            }
+
             <li className="nav-item">
               <NavLink className="nav-link" to="/contracts" exact>
                 <i 
                 className="fas fa-tachometer-alt">
-                </i>Lista Umów
+                </i>Umowy
               </NavLink>
             </li>
 
@@ -90,11 +101,19 @@ const Navbar2 = () => {
               <NavLink className="nav-link" to="/coordinators" exact>
                 <i 
                 className="far fa-address-book">
-                </i>Koordynatorzy Umów
+                </i>Koordynatorzy
               </NavLink> 
             </li>
                 : ""
             }
+
+            <li className="nav-item">
+                <NavLink className="nav-link" to="/qualification" exact>
+                    <i
+                        className="far fa-clone">
+                    </i>Kwalifikacja
+                </NavLink>
+            </li>
 
             <li className="nav-item">
                 <NavLink className="nav-link" to="/students" exact>
@@ -102,25 +121,6 @@ const Navbar2 = () => {
                     </i>Studenci
                 </NavLink>
             </li>
-
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/qualification" exact>
-                <i 
-                className="far fa-clone">
-                </i>Kwalifikacja Studentów
-              </NavLink>
-            </li>
-
-            { Cookies.get('coordinatorRole') === 'DEPARTMENT' ?
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/editions" exact>
-                <i 
-                className="far fa-chart-bar">
-                </i>Lista Edycji
-              </NavLink>
-            </li>
-                : ""
-            }
         </ul>
       </div>
   </nav>

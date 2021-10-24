@@ -94,8 +94,8 @@ class EditionsList extends Component {
                                             {renderDeactivateButton(editions.isActive, editions.id)}
                                         </td>
                                         <td><div class="btn-group-vertical">
-                                            <a download href={"http://localhost:8080/api/file/generate/" + editions.id} id="generate" class="btn btn-outline-primary" variant="outline-primary">Pobierz Listę spoza WIEIT</a>
-                                            <a download href={"http://localhost:8080/api/file/generate/WIEIT/" + editions.id} id="generate_wieit" class="btn btn-outline-primary" variant="outline-primary">Pobierz Listę WIEIT</a>
+                                            <a download href={"http://localhost:8080/api/file/generate/" + editions.id} id="generate" class="btn btn-outline-primary" variant="outline-primary" target="_blank">Pobierz Listę spoza WIEIT</a>
+                                            <a download href={"http://localhost:8080/api/file/generate/WIEIT/" + editions.id} id="generate_wieit" class="btn btn-outline-primary" variant="outline-primary" target="_blank">Pobierz Listę WIEIT</a>
                                             </div>
                                         </td>
                                     </tr>

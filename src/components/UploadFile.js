@@ -63,7 +63,7 @@ class UploadFile extends Component {
 
     EditionService.addNewEdition(formData);
 
-    window.location.href = "/editions";
+    window.location.href = "/";
     // axios.post("http://localhost:8080/api/edition/add/" + this.state.year, formData); 
   };
 

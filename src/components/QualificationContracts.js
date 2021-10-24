@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import QualificationService from '../services/QualificationService';
 import EditionService from "../services/EditionService";
 import "./Qualification.css";
+import CoordinatorsService from "../services/CoordinatorsService";
 
 class QualificationContracts extends React.Component {
 
@@ -39,6 +40,7 @@ class QualificationContracts extends React.Component {
         };
 
         QualificationService.saveQualification(body);
+        CoordinatorsService.acceptContracts();
     }
 
     componentDidMount() {

@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { Alert } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
+import "./CoordinatorsList.css";
 import CoordinatorsService from '../services/CoordinatorsService';
 import EditionService from '../services/EditionService';
 
@@ -31,15 +35,36 @@ class CoordinatorsList extends Component {
     }
 
     render() {
+
+        const renderNotifyButton = (ifAccepted, id) => {
+            if (ifAccepted) {
+                return <Button onClick={() => CoordinatorsService.nofityCoordinator(id)} id="nofity" variant="outline-danger disabled">Powiadom</Button>;
+            } else {
+                return <Button onClick={() => CoordinatorsService.nofityCoordinator(id)} id="nofity" variant="outline-danger">Powiadom</Button>;
+            }
+        }
+
+        const renderIfAccepted = (ifAccepted) => {
+            console.log(ifAccepted);
+            if (ifAccepted) {
+                return <Alert variant="success">Zaakceptował</Alert>;
+            } else {
+                return <Alert variant="danger">Niezaakceptował</Alert>;
+            }
+        }
+
+
         return (
             <div>
                 <h1 className = 'text-center'>Lista Koordynatorów</h1>
-                <table className = 'table table-striped'>
+                <Table striped bordered hover>
                     <thead>
                         <tr>
                             <td>Imię</td>
                             <td>Kod</td>
                             <td>Email</td>
+                            <td>Czy zaakceptował</td>
+                            <td></td>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,11 +75,13 @@ class CoordinatorsList extends Component {
                                     <td> {coordinator.name} </td>
                                     <td> {coordinator.code} </td>
                                     <td> {coordinator.email} </td>
+                                    <td> {renderIfAccepted(coordinator.ifAccepted)} </td>
+                                    <td> {renderNotifyButton(coordinator.ifAccepted, coordinator.id)} </td>
                                 </tr>
                             )
                         }
                     </tbody>
-                </table>
+                </Table>
             </div>
         );
     }

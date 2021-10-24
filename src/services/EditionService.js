@@ -17,6 +17,8 @@ const GENERATE_FILE_BY_EDITION = 'http://localhost:8080/api/file/generate/';
 
 const EDIT_EDITION= 'http://localhost:8080/api/edition/update';
 
+const IF_CAN_DOWNLOAD_FILES = 'http://localhost:8080/api/edition/ifCanDownload';
+
 class EditionService {
 
     getAllEditions() {
@@ -53,6 +55,10 @@ class EditionService {
 
     editEdition(data) {
         return axios.post(EDIT_EDITION, data);
+    }
+
+    ifCanDownload(id, if_wieit) {
+        return axios.get(IF_CAN_DOWNLOAD_FILES + "/" + id + "/" + if_wieit, { headers: {'Session-Code': Cookies.get('sessionCode')} });
     }
 }
 

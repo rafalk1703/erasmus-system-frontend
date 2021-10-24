@@ -3,6 +3,8 @@ import { Alert, ProgressBar } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import "./MainDepartment.css";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 import CoordinatorsService from '../services/CoordinatorsService';
 import EditionService from '../services/EditionService';
 
@@ -17,12 +19,19 @@ class MainDepartemt extends Component {
             activeEditionId: '',
             amountOfAccepted: ''
         }
+
+        this.nofityCoordinators = this.nofityCoordinators.bind(this);
     }
 
     countAcceptedCoordinators() {
         return this.state.coordinators.filter(function (coordinator) {
             return coordinator.ifAccepted === true;
         }).length
+    }
+
+    nofityCoordinators() {
+        CoordinatorsService.nofityAllCoordinators(this.state.activeEditionId);
+        NotificationManager.success('Powiadomienia zostały wysłane', 'Sukces!');
     }
 
 
@@ -56,6 +65,8 @@ class MainDepartemt extends Component {
         const renderIfActive = (activeEditionYear) => {
             if (activeEditionYear != '') {
                 return <div >
+                    <NotificationContainer/>
+
                     <div class="content">
                     <br></br>
                     <h1 class='label'><Alert variant="success" >Aktywna Edycja {activeEditionYear}</Alert></h1>
@@ -68,7 +79,7 @@ class MainDepartemt extends Component {
                         style = {{margin: '20px'}}>
                     </ProgressBar>
                     <div class="notifyButton">
-                    <Button onClick={() => CoordinatorsService.nofityAllCoordinators(this.state.activeEditionId)} variant="outline-primary" style = {{margin: '20px'}}>Powiadom Koordynatorów</Button>
+                    <Button onClick={this.nofityCoordinators} variant="outline-primary" style = {{margin: '20px'}}>Powiadom Koordynatorów</Button>
                     </div>
                     </div>
                 </div>;

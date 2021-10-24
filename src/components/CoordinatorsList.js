@@ -3,6 +3,8 @@ import { Alert } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
 import "./CoordinatorsList.css";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 import CoordinatorsService from '../services/CoordinatorsService';
 import EditionService from '../services/EditionService';
 
@@ -38,9 +40,9 @@ class CoordinatorsList extends Component {
 
         const renderNotifyButton = (ifAccepted, id) => {
             if (ifAccepted) {
-                return <Button onClick={() => CoordinatorsService.nofityCoordinator(id)} id="nofity" variant="outline-danger disabled">Powiadom</Button>;
+                return <Button id="nofity" variant="outline-danger disabled">Powiadom</Button>;
             } else {
-                return <Button onClick={() => CoordinatorsService.nofityCoordinator(id)} id="nofity" variant="outline-danger">Powiadom</Button>;
+                return <Button onClick={() => {CoordinatorsService.nofityCoordinator(id); NotificationManager.success('Powiadomienie zostało wysłane', 'Sukces!')}} id="nofity" variant="outline-danger">Powiadom</Button>;
             }
         }
 
@@ -56,6 +58,7 @@ class CoordinatorsList extends Component {
 
         return (
             <div>
+                <NotificationContainer/>
                 <h1 className = 'text-center'>Lista Koordynatorów</h1>
                 <Table striped bordered hover>
                     <thead>

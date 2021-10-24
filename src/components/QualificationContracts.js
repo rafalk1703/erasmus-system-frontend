@@ -4,7 +4,10 @@ import Cookies from "js-cookie";
 import QualificationService from '../services/QualificationService';
 import EditionService from "../services/EditionService";
 import "./Qualification.css";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 import CoordinatorsService from "../services/CoordinatorsService";
+import 'react-notifications/lib/notifications.css';
+
 
 class QualificationContracts extends React.Component {
 
@@ -39,6 +42,7 @@ class QualificationContracts extends React.Component {
             "registrations": registrationsBody
         };
 
+        NotificationManager.success('Zapisano twój wybór', 'Sukces!');
         QualificationService.saveQualification(body);
         CoordinatorsService.acceptContracts();
     }
@@ -71,6 +75,7 @@ class QualificationContracts extends React.Component {
 
         return (
             <div>
+                <NotificationContainer/>
                 <h1 id='header'>Kwalifikacja Studentów</h1>
                 <Nav variant="tabs" className="flex-row" id="degree-switch" defaultActiveKey="1st">
                     <Nav.Item>

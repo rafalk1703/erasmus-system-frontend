@@ -63,7 +63,7 @@ class MainDepartemt extends Component {
 
 
         const renderIfActive = (activeEditionYear) => {
-            if (activeEditionYear != '') {
+            if (activeEditionYear !== '') {
                 return <div >
                     <NotificationContainer/>
 

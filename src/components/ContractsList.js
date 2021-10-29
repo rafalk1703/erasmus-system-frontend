@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ContractService from '../services/ContractService';
-import { Accordion, Card, Button } from "react-bootstrap";
-import { MenuItem, InputLabel } from '@material-ui/core';
+import { Accordion, Card } from "react-bootstrap";
+import { InputLabel } from '@material-ui/core';
 import Select from "react-select";
 import Cookies from "js-cookie";
 import "./ContractList.css";

@@ -10,4 +10,4 @@ class StudentsService {
     }
 }
 
-export default new StudentsService
+export default new StudentsService()

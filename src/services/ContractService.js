@@ -14,4 +14,4 @@ class ContractService {
     }
 }
 
-export default new ContractService
+export default new ContractService()

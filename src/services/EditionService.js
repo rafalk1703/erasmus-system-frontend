@@ -62,4 +62,4 @@ class EditionService {
     }
 }
 
-export default new EditionService
+export default new EditionService()

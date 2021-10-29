@@ -16,4 +16,4 @@ class QualificationService {
     }
 }
 
-export default new QualificationService
+export default new QualificationService()

@@ -32,4 +32,4 @@ class CoordinatorsService {
     }
 }
 
-export default new CoordinatorsService
+export default new CoordinatorsService()

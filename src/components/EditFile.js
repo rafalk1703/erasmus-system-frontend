@@ -1,7 +1,4 @@
-import axios from 'axios';
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
-import { FaThinkPeaks } from 'react-icons/fa';
 import { Button } from 'react-bootstrap';
 import EditionService from '../services/EditionService'
 import "./UploadFile.css";

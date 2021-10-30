@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import Cookies from "js-cookie";
 import EditionService from '../services/EditionService'
-import { Redirect } from 'react-router'
 import "./UploadFile.css";
 
 class UploadFile extends Component {
@@ -54,16 +53,9 @@ class UploadFile extends Component {
     formData.append("registrations_file", this.state.registrationsFile);
     formData.append("session_code", Cookies.get('sessionCode'));
 
-    console.log(this.state.coordinatorsFile);
-    console.log(this.state.contractsFile);
-    console.log(this.state.registrationsFile);
-
-
     EditionService.addNewEdition(formData);
 
-    <Redirect to="/" />
-    // window.location.href = "/";
-    // axios.post("http://localhost:8080/api/edition/add/" + this.state.year, formData); 
+    window.location.href = "/";
   };
 
   file1Data = () => {

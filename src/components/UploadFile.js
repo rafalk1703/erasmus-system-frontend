@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import Cookies from "js-cookie";
 import EditionService from '../services/EditionService'
+import { Redirect } from 'react-router'
 import "./UploadFile.css";
 
 class UploadFile extends Component {
@@ -60,7 +61,8 @@ class UploadFile extends Component {
 
     EditionService.addNewEdition(formData);
 
-    window.location.href = "/";
+    <Redirect to="/" />
+    // window.location.href = "/";
     // axios.post("http://localhost:8080/api/edition/add/" + this.state.year, formData); 
   };
 

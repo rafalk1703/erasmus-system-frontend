@@ -9,6 +9,10 @@ const NOTIFY_ALL_COORDINATORS_REST_API_URL = 'http://localhost:8080/api/notifyAl
 
 const ACCEPT_CONTRACTS_REST_API_URL = 'http://localhost:8080/api/acceptContracts';
 
+const IF_HAS_CONTRACTS_REST_API_URL = 'http://localhost:8080/api/ifHasContracts';
+
+const IF_ACCEPTED_REST_API_URL = 'http://localhost:8080/api/ifAccepted';
+
 class CoordinatorsService {
 
     getAllCoordinators() {
@@ -29,6 +33,14 @@ class CoordinatorsService {
 
     acceptContracts() {
         return axios.get(ACCEPT_CONTRACTS_REST_API_URL, { headers: {'Session-Code': Cookies.get('sessionCode')} });
+    }
+
+    ifHasContracts(edition_id) {
+        return axios.get(IF_HAS_CONTRACTS_REST_API_URL + "/" + edition_id, { headers: {'Session-Code': Cookies.get('sessionCode')} });
+    }
+
+    ifAccepted() {
+        return axios.get(IF_ACCEPTED_REST_API_URL, { headers: {'Session-Code': Cookies.get('sessionCode')} });
     }
 }
 

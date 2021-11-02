@@ -3,6 +3,7 @@ import {Dropdown} from "react-bootstrap";
 import Cookies from "js-cookie";
 import Login from "../components/Login";
 import MainDepartment from "../components/MainDepartment";
+import MainContracts from "../components/MainContracts";
 
 class MainPage extends React.Component {
 
@@ -30,7 +31,9 @@ class MainPage extends React.Component {
                         </Dropdown>
                         { Cookies.get('coordinatorRole') === 'DEPARTMENT' ?
                             <MainDepartment/>
-                            : ''
+                            : Cookies.get('coordinatorRole') === 'CONTRACTS' ?
+                                <MainContracts/>
+                                : ''
                         }
                     </div>
                 }

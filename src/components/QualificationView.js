@@ -17,31 +17,53 @@ class QualificationView extends React.Component {
             studentsRegistrations: {},
             markedRegistrationsFlags: {},
             isSthMarked: false,
-            selectedDegree: "1st",
-            prequalifyDone: false
+            selectedDegree: "1st"
         }
         this.prequalify = this.prequalify.bind(this);
         this.confirmQualification = this.confirmQualification.bind(this);
         this.saveQualificationChanges = this.saveQualificationChanges.bind(this);
     }
 
-    prequalify() {
+    clearQualification() {
         this.state.contracts.map(
             contract => {
-                const registrationsPriority1 = contract.registrations.filter(registration => registration.priority === 1);
-                if (registrationsPriority1.length <= contract.vacancies) {
-                    registrationsPriority1.map(r => r.registrationStatus = true);
-                } else {
-                    for (var i=0; i<contract.vacancies; i++) {
-                        registrationsPriority1[i].registrationStatus = true;
+                contract.tickedStudentsAmount = 0;
+                contract.registrations.map(
+                    registration => {
+                        registration.registrationStatus = false;
+                        this.state.studentsRegistrations[registration.student.id].tickedAmount = 0;
                     }
-                }
+                )
             }
         )
-        this.setState({contracts: this.state.contracts});
-        this.setState({prequalifyDone: true});
-        this.saveQualificationChanges("draft");
-        this.componentDidMount();
+    }
+
+    prequalify() {
+        this.clearQualification();
+        for (let priority=1; priority<=3; priority++) {
+            this.state.contracts.map(
+                contract => {
+                    if (contract.tickedStudentsAmount < contract.vacancies) {
+                        contract.registrations.filter(registration => (registration.priority === priority)).map(
+                            registration => {
+                                if (contract.tickedStudentsAmount < contract.vacancies &&
+                                    registration.registrationStatus === false &&
+                                    this.state.studentsRegistrations[registration.student.id].tickedAmount < 1
+                                ) {
+                                    contract.tickedStudentsAmount++;
+                                    registration.registrationStatus = true;
+                                    this.state.studentsRegistrations[registration.student.id].tickedAmount++;
+                                    this.setState({
+                                        contracts : this.state.contracts,
+                                        studentsRegistrations: this.state.studentsRegistrations
+                                    })
+                                }
+                            }
+                        )
+                    }
+                }
+            )
+        }
     }
 
     confirmQualification() {
@@ -128,7 +150,7 @@ class QualificationView extends React.Component {
                 </Button>
                 {
                     Cookies.get('coordinatorRole') === 'CONTRACTS' ?
-                        <Button variant="outline-warning" className="action-button" disabled={this.state.prequalifyDone} onClick={this.prequalify}>
+                        <Button variant="outline-warning" className="action-button" onClick={this.prequalify}>
                             Prekwalifikuj
                         </Button>
                         : ""

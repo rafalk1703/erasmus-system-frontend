@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, CardColumns, Row, Col, Button, Container, ProgressBar, FormCheck, Badge, Nav} from "react-bootstrap";
+import {Card, CardColumns, Row, Col, Button, Container, ProgressBar, FormCheck, Badge, Nav, Alert} from "react-bootstrap";
 import Cookies from "js-cookie";
 import QualificationService from '../services/QualificationService';
 import EditionService from "../services/EditionService";
@@ -17,7 +17,8 @@ class QualificationView extends React.Component {
             studentsRegistrations: {},
             markedRegistrationsFlags: {},
             isSthMarked: false,
-            selectedDegree: "Ist"
+            selectedDegree: "Ist",
+            isQualificationConfirmed: null
         }
         this.prequalify = this.prequalify.bind(this);
         this.confirmQualification = this.confirmQualification.bind(this);
@@ -70,6 +71,9 @@ class QualificationView extends React.Component {
         this.saveQualificationChanges("confirm");
         NotificationManager.success('Kwalifikacja zatwierdzona', 'Sukces!');
         CoordinatorsService.acceptContracts();
+        this.setState({
+            isQualificationConfirmed: true
+        })
     }
 
     saveQualificationChanges(typeOfSaving) {
@@ -107,10 +111,18 @@ class QualificationView extends React.Component {
                 });
             })()
         } catch (err) {}
+
+        CoordinatorsService.ifAccepted().then((response) => {
+                this.setState({
+                    isQualificationConfirmed: response.data
+                })
+        });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        this.saveQualificationChanges("draft");
+        if (!this.state.isQualificationConfirmed) {
+            this.saveQualificationChanges("draft");
+        }
     }
 
     render() {
@@ -128,6 +140,9 @@ class QualificationView extends React.Component {
             <div>
                 <NotificationContainer/>
                 <h1 id='header'>Kwalifikacja Studentów</h1>
+                <Alert variant="success" id="confirm-alert" style={{display: this.state.isQualificationConfirmed !== true ? 'none' : null}}>
+                    Kwalifikacja ostatecznie zatwierdzona
+                </Alert>
                 <Nav variant="tabs" className="flex-row" id="degree-switch" defaultActiveKey="Ist">
                     <Nav.Item>
                         <Nav.Link eventKey="Ist" onSelect={() => this.setState({selectedDegree: "Ist"})}>
@@ -145,12 +160,16 @@ class QualificationView extends React.Component {
                         </Nav.Link>
                     </Nav.Item>
                 </Nav>
-                <Button variant="outline-success" className="action-button" type="submit" onClick={this.confirmQualification}>
+                <Button variant="outline-success" className="action-button" type="submit"
+                        style={{display: this.state.isQualificationConfirmed !== false ? 'none' : null}}
+                        onClick={this.confirmQualification}>
                     Zatwierdź kwalifikację ostatecznie
                 </Button>
                 {
                     Cookies.get('coordinatorRole') === 'CONTRACTS' ?
-                        <Button variant="outline-warning" className="action-button" onClick={this.prequalify}>
+                        <Button variant="outline-warning" className="action-button"
+                                style={{display: this.state.isQualificationConfirmed !== false ? 'none' : null}}
+                                onClick={this.prequalify}>
                             Prekwalifikuj
                         </Button>
                         : ""
@@ -218,8 +237,9 @@ class QualificationView extends React.Component {
                                                                             id="plus-minus"
                                                                             style={{
                                                                                 display:
-                                                                                    !registration.registrationStatus &&
-                                                                                    (contract.tickedStudentsAmount >= contract.vacancies || this.state.studentsRegistrations[registration.student.id].tickedAmount > 0)
+                                                                                    (!registration.registrationStatus &&
+                                                                                    (contract.tickedStudentsAmount >= contract.vacancies || this.state.studentsRegistrations[registration.student.id].tickedAmount > 0))
+                                                                                        || this.state.isQualificationConfirmed
                                                                                         ? 'none': null
                                                                             }}
                                                                             onClick={() => {

@@ -6,11 +6,19 @@
 #degree-switch {
     float: left;
     margin-left: 10px;
+    margin-bottom: 20px;
 }
 
 .action-button {
     margin: 0 10px 25px 0;
     float: right;
+}
+
+#confirm-alert {
+    width: 40%;
+    position: relative;
+    left: 30%;
+    text-align: center;
 }
 
 #container {

@@ -3,12 +3,13 @@ import {Card, CardColumns, Row, Col, Button, Container, ProgressBar, FormCheck, 
 import Cookies from "js-cookie";
 import QualificationService from '../services/QualificationService';
 import EditionService from "../services/EditionService";
-import "./QualificationView.css";
+import "./Qualification.css";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import CoordinatorsService from "../services/CoordinatorsService";
 import 'react-notifications/lib/notifications.css';
 
-class QualificationView extends React.Component {
+
+class QualificationContracts extends React.Component {
 
     constructor(props) {
         super(props)
@@ -17,69 +18,47 @@ class QualificationView extends React.Component {
             studentsRegistrations: {},
             markedRegistrationsFlags: {},
             isSthMarked: false,
-            selectedDegree: "Ist"
+            selectedDegree: "Ist",
+            prequalifyDone: false
         }
         this.prequalify = this.prequalify.bind(this);
         this.confirmQualification = this.confirmQualification.bind(this);
         this.saveQualificationChanges = this.saveQualificationChanges.bind(this);
     }
 
-    clearQualification() {
+    prequalify() {
         this.state.contracts.map(
             contract => {
-                contract.tickedStudentsAmount = 0;
-                contract.registrations.map(
-                    registration => {
-                        registration.registrationStatus = false;
-                        this.state.studentsRegistrations[registration.student.id].tickedAmount = 0;
-                    }
-                )
-            }
-        )
-    }
-
-    prequalify() {
-        this.clearQualification();
-        for (let priority=1; priority<=3; priority++) {
-            this.state.contracts.map(
-                contract => {
-                    if (contract.tickedStudentsAmount < contract.vacancies) {
-                        contract.registrations.filter(registration => (registration.priority === priority)).map(
-                            registration => {
-                                if (contract.tickedStudentsAmount < contract.vacancies &&
-                                    registration.registrationStatus === false &&
-                                    this.state.studentsRegistrations[registration.student.id].tickedAmount < 1
-                                ) {
-                                    contract.tickedStudentsAmount++;
-                                    registration.registrationStatus = true;
-                                    this.state.studentsRegistrations[registration.student.id].tickedAmount++;
-                                    this.setState({
-                                        contracts : this.state.contracts,
-                                        studentsRegistrations: this.state.studentsRegistrations
-                                    })
-                                }
-                            }
-                        )
+                const registrationsPriority1 = contract.registrations.filter(registration => registration.priority === 1);
+                if (registrationsPriority1.length <= contract.vacancies) {
+                    registrationsPriority1.map(r => r.isNominated = true);
+                } else {
+                    for (var i=0; i<contract.vacancies; i++) {
+                        registrationsPriority1[i].isNominated = true;
                     }
                 }
-            )
-        }
+            }
+        )
+        this.setState({contracts: this.state.contracts});
+        this.setState({prequalifyDone: true});
+        this.saveQualificationChanges();
+        this.componentDidMount();
     }
 
     confirmQualification() {
-        this.saveQualificationChanges("confirm");
+        this.saveQualificationChanges();
         NotificationManager.success('Kwalifikacja zatwierdzona', 'Sukces!');
         CoordinatorsService.acceptContracts();
     }
 
-    saveQualificationChanges(typeOfSaving) {
+    saveQualificationChanges() {
         const registrationsBody = [];
 
         this.state.contracts.map( contract => {
             contract.registrations.map( registration => {
                 let reg = {
                     "registrationId": registration.id,
-                    "registrationStatus": registration.registrationStatus
+                    "registrationStatus": registration.isNominated
                 };
                 registrationsBody.push(reg);
             });
@@ -87,8 +66,7 @@ class QualificationView extends React.Component {
 
         let body = {
             "sessionCode": Cookies.get('sessionCode'),
-            "registrations": registrationsBody,
-            "typeOfSaving": typeOfSaving
+            "registrations": registrationsBody
         };
 
         QualificationService.saveQualification(body);
@@ -110,7 +88,7 @@ class QualificationView extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        this.saveQualificationChanges("draft");
+        this.saveQualificationChanges();
     }
 
     render() {
@@ -146,15 +124,11 @@ class QualificationView extends React.Component {
                     </Nav.Item>
                 </Nav>
                 <Button variant="outline-success" className="action-button" type="submit" onClick={this.confirmQualification}>
-                    Zatwierdź kwalifikację ostatecznie
+                    Zatwierdź kwalifikację
                 </Button>
-                {
-                    Cookies.get('coordinatorRole') === 'CONTRACTS' ?
-                        <Button variant="outline-warning" className="action-button" onClick={this.prequalify}>
-                            Prekwalifikuj
-                        </Button>
-                        : ""
-                }
+                <Button variant="outline-warning" className="action-button" disabled={this.state.prequalifyDone} onClick={this.prequalify}>
+                    Prekwalifikuj
+                </Button>
                 <Container id="container">
                     <Row xs={1} md={3} className="g-4">
                         {
@@ -178,17 +152,9 @@ class QualificationView extends React.Component {
                                                             <Card key={registration.id}
                                                                   id="reg-card"
                                                                   style={{
-                                                                      borderWidth:
-                                                                          this.state.markedRegistrationsFlags[registration.id] ? '5px' : null,
-                                                                      borderColor:
-                                                                          this.state.markedRegistrationsFlags[registration.id] ? 'CornflowerBlue': null,
                                                                       backgroundColor:
-                                                                              registration.registrationStatus ? '#d0f0c0' : '#FFFFFF',
-                                                                      opacity:
-                                                                          !registration.registrationStatus &&
-                                                                          this.state.studentsRegistrations[registration.student.id].tickedAmount > 0 &&
-                                                                          !this.state.markedRegistrationsFlags[registration.id]
-                                                                              ? 0.5 : 1
+                                                                          this.state.markedRegistrationsFlags[registration.id] ? '#FFDAB9' :
+                                                                              registration.isNominated ? '#d0f0c0' : '#FFFFFF'
                                                                   }}>
                                                                 <div id="reg-div">
                                                                     <div className='square'
@@ -214,51 +180,52 @@ class QualificationView extends React.Component {
                                                                             {registration.student.department}, {registration.student.field}, {registration.student.year} rok
                                                                         </h6>
                                                                     </div>
-                                                                    <Button variant={registration.registrationStatus ? "danger" : "success"}
+                                                                    <Button variant={registration.isNominated ? "danger" : "success"}
                                                                             id="plus-minus"
-                                                                            style={{
-                                                                                display:
-                                                                                    !registration.registrationStatus &&
-                                                                                    (contract.tickedStudentsAmount >= contract.vacancies || this.state.studentsRegistrations[registration.student.id].tickedAmount > 0)
-                                                                                        ? 'none': null
-                                                                            }}
+                                                                            disabled={contract.tickedStudentsAmount >= contract.vacancies && !registration.isNominated}
                                                                             onClick={() => {
-                                                                                if (contract.tickedStudentsAmount < contract.vacancies || registration.registrationStatus ) {
-                                                                                    if (registration.registrationStatus) {
+                                                                                if (contract.tickedStudentsAmount < contract.vacancies || registration.isNominated ) {
+                                                                                    if (registration.isNominated) {
                                                                                         contract.tickedStudentsAmount--;
                                                                                         this.state.studentsRegistrations[registration.student.id].tickedAmount--;
                                                                                     } else {
                                                                                         contract.tickedStudentsAmount++;
                                                                                         this.state.studentsRegistrations[registration.student.id].tickedAmount++;
                                                                                     }
-                                                                                    registration.registrationStatus = !registration.registrationStatus
+                                                                                    registration.isNominated = !registration.isNominated
                                                                                     this.setState({
                                                                                         contracts: this.state.contracts,
                                                                                         studentsRegistrations: this.state.studentsRegistrations
                                                                                     })
                                                                                 }
                                                                             }}>
-                                                                        <h5>{registration.registrationStatus ? '-' : '+'}</h5>
+                                                                        <h5>{registration.isNominated ? '-' : '+'}</h5>
                                                                     </Button>
                                                                     <div>
-                                                                        <Badge id="warning-badge"
+                                                                        <Badge className="badge"
+                                                                               id="warning-badge"
                                                                                style={{
                                                                                    display:
                                                                                        contract.tickedStudentsAmount === contract.vacancies
                                                                                        && this.state.studentsRegistrations[registration.student.id].tickedAmount < 1 ? null : 'none'
-                                                                               }}>BRAK PRZYPISANIA NA ŻADNĄ UMOWĘ
+                                                                               }}>BRAK PRZYPISANIA
                                                                         </Badge>
-                                                                        {
-                                                                            Cookies.get('coordinatorRole') === 'DEPARTMENT' ?
-                                                                                <Badge id="conflict-badge"
-                                                                                       style={{
-                                                                                           display:
-                                                                                               registration.registrationStatus
-                                                                                               && this.state.studentsRegistrations[registration.student.id].tickedAmount > 1 ? null : 'none'
-                                                                                       }}>KONFLIKT
-                                                                                </Badge>
-                                                                                : ""
-                                                                        }
+                                                                        <Badge className="badge"
+                                                                               id="conflict-badge"
+                                                                               style={{
+                                                                                   display:
+                                                                                       registration.isNominated
+                                                                                       && this.state.studentsRegistrations[registration.student.id].tickedAmount > 1 ? null : 'none'
+                                                                               }}>KONFLIKT
+                                                                        </Badge>
+                                                                        <Badge className="badge"
+                                                                               id="assignment-badge"
+                                                                               style={{
+                                                                                   display:
+                                                                                       !registration.isNominated
+                                                                                       && this.state.studentsRegistrations[registration.student.id].tickedAmount > 0 ? null : 'none'
+                                                                               }}>JUŻ PRZYPISANY
+                                                                        </Badge>
                                                                     </div>
                                                                 </div>
                                                             </Card>
@@ -268,9 +235,7 @@ class QualificationView extends React.Component {
                                             <Card.Footer>
                                                 <ProgressBar id="progress"
                                                              key={contract.id}
-                                                             variant={
-                                                                 contract.tickedStudentsAmount === contract.vacancies ? "success" : "warning"
-                                                             }
+                                                             variant="success"
                                                              now={contract.tickedStudentsAmount / contract.vacancies * 100}
                                                              label={`${contract.tickedStudentsAmount} z ${contract.vacancies}`}
                                                 />
@@ -286,4 +251,4 @@ class QualificationView extends React.Component {
     }
 }
 
-export default QualificationView;
+export default QualificationContracts;

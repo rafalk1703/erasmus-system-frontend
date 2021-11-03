@@ -121,9 +121,9 @@ class ContractsList extends Component {
 
         const degreeOptions = [
             { label: "All", value: "" },
-            { label: "1st", value: "1st" },
-            { label: "2st", value: "2st" },
-            { label: "3st", value: "3st" }
+            { label: "Ist", value: "Ist" },
+            { label: "IIst", value: "IIst" },
+            { label: "IIIst", value: "IIIst" }
 
         ];
 

@@ -13,6 +13,8 @@ const IF_HAS_CONTRACTS_REST_API_URL = 'http://localhost:8080/api/ifHasContracts'
 
 const IF_ACCEPTED_REST_API_URL = 'http://localhost:8080/api/ifAccepted';
 
+const IF_ALL_CONTRACTS_QUALIFIED_REST_API_URL = 'http://localhost:8080/api/ifAllContractsQualified';
+
 class CoordinatorsService {
 
     getAllCoordinators() {
@@ -41,6 +43,10 @@ class CoordinatorsService {
 
     ifAccepted() {
         return axios.get(IF_ACCEPTED_REST_API_URL, { headers: {'Session-Code': Cookies.get('sessionCode')} });
+    }
+
+    ifAllContractsQualified(edition_id) {
+        return axios.get(IF_ALL_CONTRACTS_QUALIFIED_REST_API_URL + "/" + edition_id, { headers: {'Session-Code': Cookies.get('sessionCode')} });
     }
 }
 

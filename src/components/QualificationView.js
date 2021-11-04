@@ -18,7 +18,8 @@ class QualificationView extends React.Component {
             markedRegistrationsFlags: {},
             isSthMarked: false,
             selectedDegree: "Ist",
-            isQualificationConfirmed: null
+            isQualificationConfirmed: null,
+            ifAllContractsQualified: false
         }
         this.prequalify = this.prequalify.bind(this);
         this.confirmQualification = this.confirmQualification.bind(this);
@@ -102,12 +103,20 @@ class QualificationView extends React.Component {
         try {
             (async () => {
                 await EditionService.getActiveEdition().then((response1) => {
+
                     QualificationService.getQualificationByEdition(response1.data.id).then((response) => {
                         this.setState({
                             contracts: response.data.contracts,
                             studentsRegistrations: response.data.studentsRegistrations
                         })
                     });
+
+                    CoordinatorsService.ifAllContractsQualified(response1.data.id).then((response) => {
+                        this.setState({
+                            ifAllContractsQualified: response.data
+                        })
+                    });
+
                 });
             })()
         } catch (err) {}
@@ -119,12 +128,6 @@ class QualificationView extends React.Component {
         });
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (!this.state.isQualificationConfirmed) {
-            this.saveQualificationChanges("draft");
-        }
-    }
-
     render() {
         const markStudentRegistrations = (studentId) => {
             this.state.studentsRegistrations[studentId].registrationsIds.map( registrationId => {
@@ -134,6 +137,25 @@ class QualificationView extends React.Component {
                 markedRegistrationsFlags: this.state.markedRegistrationsFlags,
                 isSthMarked: !this.state.isSthMarked
             });
+        }
+
+        const checkIfAllContractsQualified = () => {
+            let flag = true;
+            for (let i=0; i<this.state.contracts.length; i++) {
+                if (this.state.contracts[i].tickedStudentsAmount < this.state.contracts[i].vacancies) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag) {
+                this.setState({
+                    ifAllContractsQualified: true
+                })
+            } else {
+                this.setState({
+                   ifAllContractsQualified: false
+                })
+            }
         }
 
         return (
@@ -161,7 +183,7 @@ class QualificationView extends React.Component {
                     </Nav.Item>
                 </Nav>
                 <Button variant="outline-success" className="action-button" type="submit"
-                        style={{display: this.state.isQualificationConfirmed !== false ? 'none' : null}}
+                        style={{display: !this.state.ifAllContractsQualified || this.state.isQualificationConfirmed ? 'none' : null}}
                         onClick={this.confirmQualification}>
                     Zatwierdź kwalifikację ostatecznie
                 </Button>
@@ -169,7 +191,11 @@ class QualificationView extends React.Component {
                     Cookies.get('coordinatorRole') === 'CONTRACTS' ?
                         <Button variant="outline-warning" className="action-button"
                                 style={{display: this.state.isQualificationConfirmed !== false ? 'none' : null}}
-                                onClick={this.prequalify}>
+                                onClick={() => {
+                                    this.prequalify();
+                                    this.saveQualificationChanges("draft");
+                                    checkIfAllContractsQualified();
+                                }}>
                             Prekwalifikuj
                         </Button>
                         : ""
@@ -257,6 +283,8 @@ class QualificationView extends React.Component {
                                                                                         studentsRegistrations: this.state.studentsRegistrations
                                                                                     })
                                                                                 }
+                                                                                this.saveQualificationChanges("draft");
+                                                                                checkIfAllContractsQualified();
                                                                             }}>
                                                                         <h5>{registration.registrationStatus ? '-' : '+'}</h5>
                                                                     </Button>

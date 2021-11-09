@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ContractService from '../services/ContractService';
-import { Accordion, Card } from "react-bootstrap";
+import { Accordion, Card, Button } from "react-bootstrap";
 import { InputLabel } from '@material-ui/core';
 import Select from "react-select";
 import Cookies from "js-cookie";
@@ -151,9 +151,22 @@ class ContractsList extends Component {
             label: "All"
         })
 
+        const onFormSubmit = id => e => {
+            e.preventDefault();
+            
+            if (e.target[0].value === "") {
+                return
+            }
+            
+            
+            ContractService.changeNumberOfVacancies(id, e.target[0].value);
+            window.location.reload();
+
+          }
+
         return (
             <div>
-                { Cookies.get('coordinatorRole') === 'DEPARTMENT' ?
+                {Cookies.get('coordinatorRole') === 'DEPARTMENT' ?
                     <h1 className='text-center'>Lista wszystkich kontraktów</h1>
                     : Cookies.get('coordinatorRole') === 'CONTRACTS' ?
                         <h1 className='text-center'>Lista moich kontraktów</h1>
@@ -161,16 +174,16 @@ class ContractsList extends Component {
                 }
                 <div className='text-center' id="filter-box">
                     <br></br>
-                    { Cookies.get('coordinatorRole') === 'DEPARTMENT' ?
+                    {Cookies.get('coordinatorRole') === 'DEPARTMENT' ?
                         <div>
                             <div class='select' id="filter-select">
                                 <InputLabel id="label">Wydział:</InputLabel>
-                                <Select options={facultyOptions} onChange={this.filteringFacultys} placeholder="All"/>
+                                <Select options={facultyOptions} onChange={this.filteringFacultys} placeholder="All" />
                             </div>
                             <div class='select' id="filter-text">
                                 <InputLabel id="label">Koordynator:</InputLabel>
                                 <Select options={coordinatorOptions} onChange={this.filteringCoordinators}
-                                        placeholder="All"/>
+                                    placeholder="All" />
                             </div>
                         </div>
                         : ""
@@ -192,6 +205,7 @@ class ContractsList extends Component {
                                     </Accordion.Toggle>
                                     <Accordion.Collapse eventKey={contract.id}>
                                         <Card.Body>
+                                        <div class="left">
                                             <ul>
                                                 <li>Wydział: {contract.faculty}</li>
                                                 <li>Koordynator: {contract.contractCoordinator.name}</li>
@@ -199,6 +213,17 @@ class ContractsList extends Component {
                                                 <li>Stopień studiów: {contract.degree}</li>
                                                 <li>Ilość miejsc: {contract.vacancies} miejsca</li>
                                             </ul>
+                                            </div>
+                                            <div class="right">
+                                                <form onSubmit={onFormSubmit(contract.id)}>
+                                                    <label>
+                                                        Zmień liczbę miejsc:<br></br>
+                                                        <input refs="vacancies" type="number" min="0"/>
+                                                    </label>
+                                                    <br></br>
+                                                    <Button type="submit">Zatwierdź</Button>
+                                                </form>
+                                            </div>
                                         </Card.Body>
                                     </Accordion.Collapse>
                                 </Card>

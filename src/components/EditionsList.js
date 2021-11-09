@@ -75,10 +75,10 @@ class EditionsList extends Component {
             var ifCanDownload = this.state.editionsIfCanDownload.filter(editions => editions.id === edition_id).map(editions => editions.ifCanDownloadNoWieit);
 
             if (ifCanDownload[0] === 'true') {
-                return <a download href={"http://localhost:8080/api/file/generate/" + edition_id} id="generate" class="btn btn-outline-primary" variant="outline-primary">Pobierz Listę spoza WIEIT</a>;
+                return <a download href={"http://localhost:8080/api/CSVFile/generate/" + edition_id} id="generate" class="btn btn-outline-primary" variant="outline-primary">Pobierz Listę spoza WIEIT</a>;
                 
             } else {
-                return <a download href={"http://localhost:8080/api/file/generate/" + edition_id} id="generate" class="btn btn-outline-primary disabled" variant="outline-primary">Pobierz Listę spoza WIEIT</a>;
+                return <a download href={"http://localhost:8080/api/CSVFile/generate/" + edition_id} id="generate" class="btn btn-outline-primary disabled" variant="outline-primary">Pobierz Listę spoza WIEIT</a>;
             }
         }
 
@@ -87,10 +87,10 @@ class EditionsList extends Component {
             var ifCanDownload = this.state.editionsIfCanDownload.filter(editions => editions.id === edition_id).map(editions => editions.ifCanDownloadWieit);
 
             if (ifCanDownload[0] === 'true') {
-                return  <a download href={"http://localhost:8080/api/file/generate/WIEIT/" + edition_id} id="generate_wieit" class="btn btn-outline-primary" variant="outline-primary">Pobierz Listę WIEIT</a>;
+                return  <a download href={"http://localhost:8080/api/CSVFile/generate/WIEIT/" + edition_id} id="generate_wieit" class="btn btn-outline-primary" variant="outline-primary">Pobierz Listę WIEIT</a>;
                 
             } else {
-                return  <a download href={"http://localhost:8080/api/file/generate/WIEIT/" + edition_id} id="generate_wieit" class="btn btn-outline-primary disabled" variant="outline-primary">Pobierz Listę WIEIT</a>;
+                return  <a download href={"http://localhost:8080/api/CSVFile/generate/WIEIT/" + edition_id} id="generate_wieit" class="btn btn-outline-primary disabled" variant="outline-primary">Pobierz Listę WIEIT</a>;
             }
         }
         return (

@@ -15,8 +15,8 @@ class ContractService {
         return axios.get(ALL_CONTRACTS_REST_API_URL + "/" + id, { headers: {'Session-Code': Cookies.get('sessionCode')} });
     }
 
-    changeNumberOfVacancies(id, vacancies) {
-        return axios.get(NEW_NUMBER_OF_VACANCIES_REST_API_URL + "/" + id + "/" + vacancies, { headers: {'Session-Code': Cookies.get('sessionCode')} });
+    changeNumberOfVacancies(id, body) {
+        return axios.post(NEW_NUMBER_OF_VACANCIES_REST_API_URL + "/" + id, body);
     }
 }
 

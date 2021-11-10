@@ -158,8 +158,13 @@ class ContractsList extends Component {
                 return
             }
             
-            
-            ContractService.changeNumberOfVacancies(id, e.target[0].value);
+            console.log(e.target[0].value)
+            let body = {
+                "sessionCode": Cookies.get('sessionCode'),
+                "vacancies": e.target[0].value    
+            };
+    
+            ContractService.changeNumberOfVacancies(id, body);
             window.location.reload();
 
           }

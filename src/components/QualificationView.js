@@ -111,29 +111,30 @@ class QualificationView extends React.Component {
     componentDidMount() {
         try {
             (async () => {
-                await EditionService.getActiveEdition().then((response1) => {
+                await EditionService.getActiveEdition().then((response) => {
 
-                    QualificationService.getQualificationByEdition(response1.data.id, this.state.restoreQualificationFlag).then((response) => {
+                    QualificationService.getQualificationByEdition(response.data.id, this.state.restoreQualificationFlag).then((response1) => {
                         this.setState({
-                            contracts: response.data.contracts,
-                            studentsRegistrations: response.data.studentsRegistrations
+                            contracts: response1.data.contracts,
+                            studentsRegistrations: response1.data.studentsRegistrations
                         })
                     });
+                });
+                await EditionService.getActiveEdition().then((response) => {
 
-                    CoordinatorsService.ifAllContractsQualified(response1.data.id).then((response) => {
+                    CoordinatorsService.ifAllContractsQualified(response.data.id).then((response1) => {
                         this.setState({
-                            ifAllContractsQualified: response.data
+                            ifAllContractsQualified: response1.data
                         })
                     });
-
                 });
             })()
         } catch (err) {}
 
         CoordinatorsService.ifAccepted().then((response) => {
-                this.setState({
-                    isQualificationConfirmed: response.data
-                })
+            this.setState({
+                isQualificationConfirmed: response.data
+            })
         });
     }
 
@@ -152,8 +153,17 @@ class QualificationView extends React.Component {
             let flag = true;
             for (let i=0; i<this.state.contracts.length; i++) {
                 if (this.state.contracts[i].tickedStudentsAmount < this.state.contracts[i].vacancies) {
-                    flag = false;
-                    break;
+                    for (let j=0; j<this.state.contracts[i].registrations.length; j++) {
+                        if (!this.state.contracts[i].registrations[j].registrationStatus &&
+                            this.state.studentsRegistrations[this.state.contracts[i].registrations[j].student.id].tickedAmount < 1) {
+
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if (!flag) {
+                        break;
+                    }
                 }
             }
             if (flag) {

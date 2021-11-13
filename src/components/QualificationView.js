@@ -19,11 +19,13 @@ class QualificationView extends React.Component {
             isSthMarked: false,
             selectedDegree: "Ist",
             isQualificationConfirmed: null,
-            ifAllContractsQualified: false
+            ifAllContractsQualified: false,
+            restoreQualificationFlag: false
         }
         this.prequalify = this.prequalify.bind(this);
         this.confirmQualification = this.confirmQualification.bind(this);
         this.saveQualificationChanges = this.saveQualificationChanges.bind(this);
+        this.restoreCoordinatorsQualification = this.restoreCoordinatorsQualification.bind(this);
     }
 
     clearQualification() {
@@ -99,12 +101,19 @@ class QualificationView extends React.Component {
         QualificationService.saveQualification(body);
     }
 
+    restoreCoordinatorsQualification() {
+        this.setState({
+            restoreQualificationFlag: true
+        });
+        this.componentDidMount();
+    }
+
     componentDidMount() {
         try {
             (async () => {
                 await EditionService.getActiveEdition().then((response1) => {
 
-                    QualificationService.getQualificationByEdition(response1.data.id).then((response) => {
+                    QualificationService.getQualificationByEdition(response1.data.id, this.state.restoreQualificationFlag).then((response) => {
                         this.setState({
                             contracts: response.data.contracts,
                             studentsRegistrations: response.data.studentsRegistrations
@@ -187,6 +196,15 @@ class QualificationView extends React.Component {
                         onClick={this.confirmQualification}>
                     Zatwierdź kwalifikację ostatecznie
                 </Button>
+                {
+                    Cookies.get('coordinatorRole') === 'DEPARTMENT' ?
+                        <Button variant="outline-secondary" className="action-button"
+                                style={{display: this.state.isQualificationConfirmed ? 'none' : null}}
+                                onClick={this.restoreCoordinatorsQualification}>
+                            Przywróć kwalifikację koordynatorów
+                        </Button>
+                        : ""
+                }
                 {
                     Cookies.get('coordinatorRole') === 'CONTRACTS' ?
                         <Button variant="outline-warning" className="action-button"

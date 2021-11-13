@@ -7,8 +7,8 @@ const SAVE_QUALIFICATION_REST_API_URL = 'http://localhost:8080/api/qualification
 
 class QualificationService {
 
-    getQualificationByEdition(id) {
-        return axios.get(QUALIFICATION_VIEW_REST_API_URL + "/" + id, { headers: {'Session-Code': Cookies.get('sessionCode')} });
+    getQualificationByEdition(id, restore) {
+        return axios.get(QUALIFICATION_VIEW_REST_API_URL + "/" + id + "/" + restore, { headers: {'Session-Code': Cookies.get('sessionCode')} });
     }
 
     saveQualification(body) {

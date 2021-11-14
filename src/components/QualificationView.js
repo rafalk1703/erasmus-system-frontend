@@ -20,12 +20,14 @@ class QualificationView extends React.Component {
             selectedDegree: "Ist",
             isQualificationConfirmed: null,
             ifAllContractsQualified: false,
-            restoreQualificationFlag: false
+            restoreQualificationFlag: false,
+            conflictsAmount: 0
         }
         this.prequalify = this.prequalify.bind(this);
         this.confirmQualification = this.confirmQualification.bind(this);
         this.saveQualificationChanges = this.saveQualificationChanges.bind(this);
         this.restoreCoordinatorsQualification = this.restoreCoordinatorsQualification.bind(this);
+        this.resolveConflicts = this.resolveConflicts.bind(this);
     }
 
     clearQualification() {
@@ -44,6 +46,9 @@ class QualificationView extends React.Component {
 
     prequalify() {
         this.clearQualification();
+        this.setState({
+            conflictsAmount: 0
+        })
         for (let priority=1; priority<=3; priority++) {
             this.state.contracts.map(
                 contract => {
@@ -108,6 +113,37 @@ class QualificationView extends React.Component {
         this.componentDidMount();
     }
 
+    resolveConflicts() {
+        const studentsRegistrations = Object.entries(this.state.studentsRegistrations);
+        for (let i=0; i<studentsRegistrations.length; i++) {
+            if (studentsRegistrations[i][1].tickedAmount > 1) {
+                const tickedRegistrations = [];
+                for (let j=0; j<this.state.contracts.length; j++) {
+                    for (let k=0; k<this.state.contracts[j].registrations.length; k++) {
+                        if (this.state.contracts[j].registrations[k].registrationStatus &&
+                            this.state.contracts[j].registrations[k].student.id === Number(studentsRegistrations[i][0])) {
+
+                            tickedRegistrations.push([j,k]);
+                        }
+                    }
+                }
+                tickedRegistrations.sort((a, b) => this.state.contracts[a[0]].registrations[a[1]].priority > this.state.contracts[b[0]].registrations[b[1]].priority ? 1 : -1);
+                for (let j=tickedRegistrations.length-1; j>0; j--) {
+                    let contractIndx = tickedRegistrations[j][0];
+                    let registrationIndx = tickedRegistrations[j][1];
+                    this.state.contracts[contractIndx].registrations[registrationIndx].registrationStatus = false;
+                    this.state.contracts[contractIndx].tickedStudentsAmount--;
+                    this.state.studentsRegistrations[this.state.contracts[contractIndx].registrations[registrationIndx].student.id].tickedAmount--;
+                }
+            }
+        }
+        this.setState({
+            contracts: this.state.contracts,
+            studentsRegistrations: this.state.studentsRegistrations,
+            conflictsAmount: 0
+        })
+    }
+
     componentDidMount() {
         try {
             (async () => {
@@ -116,7 +152,8 @@ class QualificationView extends React.Component {
                     QualificationService.getQualificationByEdition(response.data.id, this.state.restoreQualificationFlag).then((response1) => {
                         this.setState({
                             contracts: response1.data.contracts,
-                            studentsRegistrations: response1.data.studentsRegistrations
+                            studentsRegistrations: response1.data.studentsRegistrations,
+                            conflictsAmount: response1.data.conflictsAmount
                         })
                     });
                 });
@@ -202,7 +239,7 @@ class QualificationView extends React.Component {
                     </Nav.Item>
                 </Nav>
                 <Button variant="outline-success" className="action-button" type="submit"
-                        style={{display: !this.state.ifAllContractsQualified || this.state.isQualificationConfirmed ? 'none' : null}}
+                        style={{display: this.state.conflictsAmount > 0 || !this.state.ifAllContractsQualified || this.state.isQualificationConfirmed ? 'none' : null}}
                         onClick={this.confirmQualification}>
                     Zatwierdź kwalifikację ostatecznie
                 </Button>
@@ -215,16 +252,25 @@ class QualificationView extends React.Component {
                         </Button>
                         : ""
                 }
+                <Button variant="outline-warning" className="action-button"
+                        style={{display: this.state.isQualificationConfirmed !== false ? 'none' : null}}
+                        onClick={() => {
+                            this.prequalify();
+                            this.saveQualificationChanges("draft");
+                            checkIfAllContractsQualified();
+                        }}>
+                    Prekwalifikuj
+                </Button>
                 {
-                    Cookies.get('coordinatorRole') === 'CONTRACTS' ?
-                        <Button variant="outline-warning" className="action-button"
-                                style={{display: this.state.isQualificationConfirmed !== false ? 'none' : null}}
-                                onClick={() => {
-                                    this.prequalify();
+                    Cookies.get('coordinatorRole') === 'DEPARTMENT' ?
+                        <Button variant="outline-danger" className="action-button"
+                                style={{display: this.state.conflictsAmount === 0 ? 'none' : null}}
+                                onClick={ () => {
+                                    this.resolveConflicts();
                                     this.saveQualificationChanges("draft");
                                     checkIfAllContractsQualified();
                                 }}>
-                            Prekwalifikuj
+                            Rozwiąż konflikty
                         </Button>
                         : ""
                 }
@@ -300,6 +346,11 @@ class QualificationView extends React.Component {
                                                                                 if (contract.tickedStudentsAmount < contract.vacancies || registration.registrationStatus ) {
                                                                                     if (registration.registrationStatus) {
                                                                                         contract.tickedStudentsAmount--;
+                                                                                        if (this.state.studentsRegistrations[registration.student.id].tickedAmount > 1) {
+                                                                                            this.setState({
+                                                                                                conflictsAmount: this.state.conflictsAmount - 1
+                                                                                            })
+                                                                                        }
                                                                                         this.state.studentsRegistrations[registration.student.id].tickedAmount--;
                                                                                     } else {
                                                                                         contract.tickedStudentsAmount++;

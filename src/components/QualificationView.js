@@ -3,7 +3,7 @@ import {Card, CardColumns, Row, Col, Button, Container, ProgressBar, FormCheck, 
 import Cookies from "js-cookie";
 import QualificationService from '../services/QualificationService';
 import EditionService from "../services/EditionService";
-import "./QualificationView.css";
+import "./css/QualificationView.css";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import CoordinatorsService from "../services/CoordinatorsService";
 import 'react-notifications/lib/notifications.css';

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import EditFile from '../components/EditFile';
+import EditFile from '../../components/editions/EditFile';
 
 class EditionEdition extends Component {
     render() {

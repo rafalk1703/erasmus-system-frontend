@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Alert } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
-import "./CoordinatorsList.css";
+import "./css/CoordinatorsList.css";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import CoordinatorsService from '../services/CoordinatorsService';

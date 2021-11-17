@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { Button } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
 import { Alert } from 'react-bootstrap';
-import "./EditionsList.css";
-import EditionService from '../services/EditionService';
+import "../css/EditionsList.css";
+import EditionService from '../../services/EditionService';
 
 class EditionsList extends Component {
 

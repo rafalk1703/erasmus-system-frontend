@@ -4,7 +4,7 @@ import { Accordion, Card, Button } from "react-bootstrap";
 import { InputLabel } from '@material-ui/core';
 import Select from "react-select";
 import Cookies from "js-cookie";
-import "./ContractList.css";
+import "./css/ContractList.css";
 import EditionService from '../services/EditionService';
 
 
@@ -163,10 +163,14 @@ class ContractsList extends Component {
                 "sessionCode": Cookies.get('sessionCode'),
                 "vacancies": e.target[0].value    
             };
-    
-            ContractService.changeNumberOfVacancies(id, body);
-            window.location.reload();
 
+            ContractService.changeNumberOfVacancies(id, body)
+                .then(function (response) {
+                    window.location.reload();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
           }
 
         return (

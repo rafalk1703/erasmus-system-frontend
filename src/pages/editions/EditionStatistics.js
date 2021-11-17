@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Statistics from '../components/Statistics';
+import Statistics from '../../components/editions/Statistics';
 
 
 class EditionStatistics extends Component {

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
-import './Navbar2.css';
+import './css/Navbar2.css';
 import $ from 'jquery';
 import Cookies from "js-cookie";
 

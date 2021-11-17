@@ -3,7 +3,7 @@ import {Form, Button, Spinner} from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import Cookies from "js-cookie";
 import LoginService from "../services/LoginService";
-import "./Login.css"
+import "./css/Login.css"
 
 class Login extends React.Component {
     constructor(props) {

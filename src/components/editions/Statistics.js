@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ListGroup } from 'react-bootstrap';
-import EditionService from '../services/EditionService';
+import EditionService from '../../services/EditionService';
 
 
 class Statistics extends Component {

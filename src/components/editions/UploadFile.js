@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import Cookies from "js-cookie";
-import EditionService from '../services/EditionService'
-import "./UploadFile.css";
+import EditionService from '../../services/EditionService'
+import "../css/UploadFile.css";
 
 class UploadFile extends Component {
 

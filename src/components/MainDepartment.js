@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Alert, ProgressBar } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { Link } from "react-router-dom";
-import "./MainDepartment.css";
+import "./css/MainDepartment.css";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import CoordinatorsService from '../services/CoordinatorsService';

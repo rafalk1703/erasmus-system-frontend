@@ -5,10 +5,10 @@ import { BrowserRouter as Router, Switch, Route, NavLink } from 'react-router-do
 import Contracts from './pages/Contracts';
 import Coordinators from './pages/Coordinators';
 import Qualification from './pages/Qualification';
-import Editions from './pages/Editions';
-import NewEdition from './pages/NewEdition';
-import EditionStatistics from './pages/EditionStatistics';
-import EditEdition from './pages/EditEdition';
+import Editions from './pages/editions/Editions';
+import NewEdition from './pages/editions/NewEdition';
+import EditionStatistics from './pages/editions/EditionStatistics';
+import EditEdition from './pages/editions/EditEdition';
 import MainPage from "./pages/MainPage";
 import Students from "./pages/Students";
 import Cookies from "js-cookie";

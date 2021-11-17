@@ -4,7 +4,7 @@ import {InputLabel} from "@material-ui/core";
 import Select from "react-select";
 import EditionService from "../services/EditionService";
 import StudentsService from "../services/StudentsService";
-import "./StudentsList.css"
+import "./css/StudentsList.css"
 
 class StudentsList extends Component {
 

@@ -53,9 +53,15 @@ class UploadFile extends Component {
     formData.append("registrations_file", this.state.registrationsFile);
     formData.append("session_code", Cookies.get('sessionCode'));
 
-    EditionService.addNewEdition(formData);
+    EditionService.addNewEdition(formData)
+      .then(function (response) {
+        window.location.href = "/";
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
-    window.location.href = "/";
+    
   };
 
   file1Data = () => {

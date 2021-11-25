@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Navbar2 from './components/Navbar2';
-import { BrowserRouter as Router, Switch, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, NavLink, Redirect} from 'react-router-dom';
 import Contracts from './pages/Contracts';
 import Coordinators from './pages/Coordinators';
 import Qualification from './pages/Qualification';
@@ -30,14 +30,14 @@ class App extends Component {
           }
           <Switch>
             <Route path='/' exact component={MainPage} />
-            <Route path='/contracts' component={Contracts} />
-            <Route path='/coordinators' component={Coordinators} />
-            <Route path='/students' component={Students} />
-            <Route path='/qualification' component={Qualification} />
-            <Route path='/editions' component={Editions} />
-            <Route path='/newEdition' component={NewEdition} />
-            <Route path='/editionStatistics/:id' component={EditionStatistics} />
-            <Route path='/editEdition/:id' component={EditEdition} />
+            <Route path='/contracts'> {Cookies.get('sessionCode') === undefined ? <Redirect to="/" /> : <Contracts/>} </Route>
+            <Route path='/coordinators'> {Cookies.get('sessionCode') === undefined ? <Redirect to="/" /> : <Coordinators/>} </Route>
+            <Route path='/students'> {Cookies.get('sessionCode') === undefined ? <Redirect to="/" /> : <Students/>} </Route>
+            <Route path='/qualification'> {Cookies.get('sessionCode') === undefined ? <Redirect to="/" /> : <Qualification/>} </Route>
+            <Route path='/editions'> {Cookies.get('sessionCode') === undefined ? <Redirect to="/" /> : <Editions/>} </Route>
+            <Route path='/newEdition'> {Cookies.get('sessionCode') === undefined ? <Redirect to="/" /> : <NewEdition/>} </Route>
+            <Route path='/editionStatistics/:id'> {Cookies.get('sessionCode') === undefined ? <Redirect to="/" /> : <EditionStatistics/>} </Route>
+            <Route path='/editEdition/:id'> {Cookies.get('sessionCode') === undefined ? <Redirect to="/" /> : <EditEdition/>} </Route>
           </Switch>
         </Router>
       </>

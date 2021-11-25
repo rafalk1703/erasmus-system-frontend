@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Statistics from '../../components/editions/Statistics';
+import {withRouter} from "react-router-dom";
 
 
 class EditionStatistics extends Component {
@@ -12,4 +13,4 @@ class EditionStatistics extends Component {
   }
 }
 
-export default EditionStatistics;
+export default withRouter(EditionStatistics);

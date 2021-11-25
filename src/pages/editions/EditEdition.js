@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import EditFile from '../../components/editions/EditFile';
+import {withRouter} from "react-router-dom";
 
 class EditionEdition extends Component {
     render() {
@@ -11,4 +12,4 @@ class EditionEdition extends Component {
     }
 }
 
-export default EditionEdition;
+export default withRouter(EditionEdition);

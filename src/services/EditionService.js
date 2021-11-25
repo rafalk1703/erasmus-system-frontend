@@ -1,25 +1,25 @@
 import axios from 'axios'
 import Cookies from "js-cookie";
 
-const ALL_EDITIONS_REST_API_URL = 'http://localhost:8080/api/edition/all';
+const ALL_EDITIONS_REST_API_URL = 'http://localhost:8080/api/editions';
 
-const DELETE_EDITION_REST_API_URL = 'http://localhost:8080/api/edition/delete/';
+const DELETE_EDITION_REST_API_URL = 'http://localhost:8080/api/edition';
 
 const ADD_NEW_EDITION_REST_API_URL = 'http://localhost:8080/api/edition/add/';
 
-const DEACTIVE_EDITION_REST_API_URL = 'http://localhost:8080/api/edition/deactivate/';
+const DEACTIVE_EDITION_REST_API_URL = 'http://localhost:8080/api/edition/deactivate';
 
-const STATISTICS_REST_API_URL = 'http://localhost:8080/api/edition/statistics/';
+const STATISTICS_REST_API_URL = 'http://localhost:8080/api/edition/statistics';
 
 const ACTIVE_EDITION = 'http://localhost:8080/api/edition/active';
 
-const GENERATE_FILE_BY_EDITION = 'http://localhost:8080/api/file/generate/';
+const GENERATE_FILE_BY_EDITION = 'http://localhost:8080/api/file/generate';
 
 const EDIT_EDITION= 'http://localhost:8080/api/edition/update';
 
-const IF_CAN_DOWNLOAD_FILES = 'http://localhost:8080/api/edition/ifCanDownload';
+const IF_CAN_DOWNLOAD_FILES = 'http://localhost:8080/api/edition/if-can-download';
 
-const IF_CAN_DOWNLOAD_EDITIONS_LIST = 'http://localhost:8080/api/edition/editions/ifCanDownload';
+const IF_CAN_DOWNLOAD_EDITIONS_LIST = 'http://localhost:8080/api/editions/if-can-download';
 
 class EditionService {
 
@@ -32,7 +32,7 @@ class EditionService {
     }
 
     deleteEdition(id) {
-        return axios.get(DELETE_EDITION_REST_API_URL + "/" + id, { headers: {'Session-Code': Cookies.get('sessionCode')} });
+        return axios.delete(DELETE_EDITION_REST_API_URL + "/" + id, { headers: {'Session-Code': Cookies.get('sessionCode')} });
     }
 
     addNewEdition(data) {

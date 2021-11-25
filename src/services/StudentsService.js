@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Cookies from "js-cookie";
 
-const ALL_STUDENTS_DATA_REST_API_URL = "http://localhost:8080/api/studentsView";
+const ALL_STUDENTS_DATA_REST_API_URL = "http://localhost:8080/api/students";
 
 class StudentsService {
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const QUALIFICATION_VIEW_REST_API_URL = 'http://localhost:8080/api/qualification/editionView';
+const QUALIFICATION_VIEW_REST_API_URL = 'http://localhost:8080/api/qualification/edition-view';
 
 const SAVE_QUALIFICATION_REST_API_URL = 'http://localhost:8080/api/qualification/save';
 

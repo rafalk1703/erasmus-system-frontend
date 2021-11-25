@@ -1,19 +1,19 @@
 import axios from 'axios'
 import Cookies from "js-cookie";
 
-const ALL_COORDINATORS_REST_API_URL = 'http://localhost:8080/api/allContractCoordinatorsView';
+const ALL_COORDINATORS_REST_API_URL = 'http://localhost:8080/api/coordinators';
 
-const NOTIFY_COORDINATORS_REST_API_URL = 'http://localhost:8080/api/notify';
+const NOTIFY_COORDINATORS_REST_API_URL = 'http://localhost:8080/api/coordinator/notify';
 
-const NOTIFY_ALL_COORDINATORS_REST_API_URL = 'http://localhost:8080/api/notifyAll';
+const NOTIFY_ALL_COORDINATORS_REST_API_URL = 'http://localhost:8080/api/coordinators/notify';
 
-const ACCEPT_CONTRACTS_REST_API_URL = 'http://localhost:8080/api/acceptContracts';
+const ACCEPT_CONTRACTS_REST_API_URL = 'http://localhost:8080/api/coordinator/accept';
 
-const IF_HAS_CONTRACTS_REST_API_URL = 'http://localhost:8080/api/ifHasContracts';
+const IF_HAS_CONTRACTS_REST_API_URL = 'http://localhost:8080/api/coordinator/if-has-contracts';
 
-const IF_ACCEPTED_REST_API_URL = 'http://localhost:8080/api/ifAccepted';
+const IF_ACCEPTED_REST_API_URL = 'http://localhost:8080/api/coordinator/if-accepted';
 
-const IF_ALL_CONTRACTS_QUALIFIED_REST_API_URL = 'http://localhost:8080/api/ifAllContractsQualified';
+const IF_ALL_CONTRACTS_QUALIFIED_REST_API_URL = 'http://localhost:8080/api/coordinator/if-all-contracts-qualified';
 
 class CoordinatorsService {
 

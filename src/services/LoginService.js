@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const LOGIN_REST_API_URL = 'http://localhost:8080/api/login';
+const LOGIN_REST_API_URL = 'http://localhost:8080/api/coordinator/login';
 
 class LoginService {
 

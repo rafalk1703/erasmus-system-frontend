@@ -1,10 +1,8 @@
-import axios from 'axios';
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
-import { FaThinkPeaks } from 'react-icons/fa';
 import { Button } from 'react-bootstrap';
-import EditionService from '../services/EditionService'
-import "./UploadFile.css";
+import EditionService from '../../services/EditionService'
+import "../css/UploadFile.css";
+import Cookies from "js-cookie";
 
 class EditFile extends Component {
 
@@ -30,6 +28,7 @@ class EditFile extends Component {
 
         formData.append("edition_id", this.props.id);
         formData.append("edit_edition_file", this.state.editEditionFile);
+        formData.append("session_code", Cookies.get('sessionCode'));
 
 
         EditionService.editEdition(formData);

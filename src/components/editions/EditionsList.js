@@ -3,16 +3,16 @@ import { Link } from "react-router-dom";
 import { Button } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
 import { Alert } from 'react-bootstrap';
-import "./EditionsList.css";
-import EditionService from '../services/EditionService';
-import { Last } from 'react-bootstrap/esm/PageItem';
+import "../css/EditionsList.css";
+import EditionService from '../../services/EditionService';
 
 class EditionsList extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            editions: []
+            editions: [],
+            editionsIfCanDownload: []
         }
         this.deleteEdition = this.deleteEdition.bind(this);
         this.deactiveEdition = this.deactiveEdition.bind(this);
@@ -36,6 +36,10 @@ class EditionsList extends Component {
         EditionService.getAllEditions().then((response) => {
             this.setState({ editions: response.data })
         });
+        EditionService.ifCanDownloadEditionsList().then((response) => {
+            this.setState({ editionsIfCanDownload: response.data.body })
+        });
+        
     }
 
     render() {
@@ -63,6 +67,30 @@ class EditionsList extends Component {
             </Link>;
             } else {
                 return "";
+            }
+        }
+
+        const renderDownloadButton = (edition_id) => {
+
+            var ifCanDownload = this.state.editionsIfCanDownload.filter(editions => editions.id === edition_id).map(editions => editions.ifCanDownloadNoWieit);
+
+            if (ifCanDownload[0] === 'true') {
+                return <a download href={"http://localhost:8080/api/csv-file/generate/" + edition_id} id="generate" class="btn btn-outline-primary" variant="outline-primary">Pobierz Listę spoza WIEIT</a>;
+                
+            } else {
+                return <a download href={"http://localhost:8080/api/csv-file/generate/" + edition_id} id="generate" class="btn btn-outline-primary disabled" variant="outline-primary">Pobierz Listę spoza WIEIT</a>;
+            }
+        }
+
+        const renderDownloadWIEITButton = (edition_id) => {
+
+            var ifCanDownload = this.state.editionsIfCanDownload.filter(editions => editions.id === edition_id).map(editions => editions.ifCanDownloadWieit);
+
+            if (ifCanDownload[0] === 'true') {
+                return  <a download href={"http://localhost:8080/api/csv-file/generate/WIEIT/" + edition_id} id="generate_wieit" class="btn btn-outline-primary" variant="outline-primary">Pobierz Listę WIEIT</a>;
+                
+            } else {
+                return  <a download href={"http://localhost:8080/api/csv-file/generate/WIEIT/" + edition_id} id="generate_wieit" class="btn btn-outline-primary disabled" variant="outline-primary">Pobierz Listę WIEIT</a>;
             }
         }
         return (
@@ -94,8 +122,8 @@ class EditionsList extends Component {
                                             {renderDeactivateButton(editions.isActive, editions.id)}
                                         </td>
                                         <td><div class="btn-group-vertical">
-                                            <a download href={"http://localhost:8080/api/file/generate/" + editions.id} id="generate" class="btn btn-outline-primary" variant="outline-primary">Pobierz Listę spoza WIEIT</a>
-                                            <a download href={"http://localhost:8080/api/file/generate/WIEIT/" + editions.id} id="generate_wieit" class="btn btn-outline-primary" variant="outline-primary">Pobierz Listę WIEIT</a>
+                                            {renderDownloadButton(editions.id)}
+                                            {renderDownloadWIEITButton(editions.id)}
                                             </div>
                                         </td>
                                     </tr>

@@ -1,16 +1,25 @@
 #header {
     text-align: center;
     margin-top: 1%;
+    margin-bottom: 2%;
 }
 
 #degree-switch {
     float: left;
     margin-left: 10px;
+    margin-bottom: 20px;
 }
 
-#submit-button {
+.action-button {
     margin: 0 10px 25px 0;
     float: right;
+}
+
+#confirm-alert {
+    width: 40%;
+    position: relative;
+    left: 30%;
+    text-align: center;
 }
 
 #container {
@@ -52,16 +61,15 @@
 #warning-badge {
     color: #000000;
     background-color: #ffba00;
+    margin-bottom: 10px;
+    margin-left: 93px;
 }
 
 #conflict-badge {
     color: white;
     background-color: #ff4500;
-}
-
-#assignment-badge {
-    color: white;
-    background-color: #2e8b57;
+    margin-bottom: 10px;
+    margin-left: 23px;
 }
 
 #progress {
@@ -74,9 +82,4 @@
     float: left;
     margin: 5px 15px 5px 5px;
     border-radius: 3px;
-}
-
-.badge {
-    margin-bottom: 10px;
-    margin-left: 23px;
 }

@@ -28,4 +28,22 @@ ul {
   border-radius: 20px;
 }
 
+
+
+.left {
+  float: left;
+}
+
+.right {
+  text-align: center;
+  float: right;
+  
+}
+
+.right input {
+  width: 40px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
   

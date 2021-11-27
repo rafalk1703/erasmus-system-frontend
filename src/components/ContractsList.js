@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import ContractService from '../services/ContractService';
 import { Accordion, Card, Button } from "react-bootstrap";
-import { MenuItem, InputLabel } from '@material-ui/core';
+import { InputLabel } from '@material-ui/core';
 import Select from "react-select";
-import "./ContractList.css";
+import Cookies from "js-cookie";
+import "./css/ContractList.css";
 import EditionService from '../services/EditionService';
 
 
@@ -120,9 +121,9 @@ class ContractsList extends Component {
 
         const degreeOptions = [
             { label: "All", value: "" },
-            { label: "1st", value: "1st" },
-            { label: "2st", value: "2st" },
-            { label: "3st", value: "3st" }
+            { label: "Ist", value: "Ist" },
+            { label: "IIst", value: "IIst" },
+            { label: "IIIst", value: "IIIst" }
 
         ];
 
@@ -150,19 +151,52 @@ class ContractsList extends Component {
             label: "All"
         })
 
+        const onFormSubmit = id => e => {
+            e.preventDefault();
+            
+            if (e.target[0].value === "") {
+                return
+            }
+            
+            console.log(e.target[0].value)
+            let body = {
+                "sessionCode": Cookies.get('sessionCode'),
+                "vacancies": e.target[0].value    
+            };
+
+            ContractService.changeNumberOfVacancies(id, body)
+                .then(function (response) {
+                    window.location.reload();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+          }
+
         return (
             <div>
-                <h1 className='text-center'>Lista Kontraktów</h1>
+                {Cookies.get('coordinatorRole') === 'DEPARTMENT' ?
+                    <h1 className='text-center'>Lista wszystkich kontraktów</h1>
+                    : Cookies.get('coordinatorRole') === 'CONTRACTS' ?
+                        <h1 className='text-center'>Lista moich kontraktów</h1>
+                        : ""
+                }
                 <div className='text-center' id="filter-box">
                     <br></br>
-                    <div class='select' id="filter-select">
-                        <InputLabel id="label">Wydział:</InputLabel>
-                        <Select options={facultyOptions} onChange={this.filteringFacultys} placeholder="All" />
-                    </div>
-                    <div class='select' id="filter-text">
-                        <InputLabel id="label">Koordynator:</InputLabel>
-                        <Select options={coordinatorOptions} onChange={this.filteringCoordinators} placeholder="All" />
-                    </div>
+                    {Cookies.get('coordinatorRole') === 'DEPARTMENT' ?
+                        <div>
+                            <div class='select' id="filter-select">
+                                <InputLabel id="label">Wydział:</InputLabel>
+                                <Select options={facultyOptions} onChange={this.filteringFacultys} placeholder="All" />
+                            </div>
+                            <div class='select' id="filter-text">
+                                <InputLabel id="label">Koordynator:</InputLabel>
+                                <Select options={coordinatorOptions} onChange={this.filteringCoordinators}
+                                    placeholder="All" />
+                            </div>
+                        </div>
+                        : ""
+                    }
                     <div class='select' id="filter-text">
                         <InputLabel id="label">Stopień:</InputLabel>
                         <Select options={degreeOptions} onChange={this.filteringDegree} placeholder="All" />
@@ -180,6 +214,7 @@ class ContractsList extends Component {
                                     </Accordion.Toggle>
                                     <Accordion.Collapse eventKey={contract.id}>
                                         <Card.Body>
+                                        <div class="left">
                                             <ul>
                                                 <li>Wydział: {contract.faculty}</li>
                                                 <li>Koordynator: {contract.contractCoordinator.name}</li>
@@ -187,6 +222,17 @@ class ContractsList extends Component {
                                                 <li>Stopień studiów: {contract.degree}</li>
                                                 <li>Ilość miejsc: {contract.vacancies} miejsca</li>
                                             </ul>
+                                            </div>
+                                            <div class="right">
+                                                <form onSubmit={onFormSubmit(contract.id)}>
+                                                    <label>
+                                                        Zmień liczbę miejsc:<br></br>
+                                                        <input refs="vacancies" type="number" min="0"/>
+                                                    </label>
+                                                    <br></br>
+                                                    <Button type="submit">Zatwierdź</Button>
+                                                </form>
+                                            </div>
                                         </Card.Body>
                                     </Accordion.Collapse>
                                 </Card>

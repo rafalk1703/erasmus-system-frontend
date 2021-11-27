@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
-import QualificationTable from '../components/QualificationTable';
+import QualificationView from "../components/QualificationView";
+import Cookies from "js-cookie";
 
 class Qualification extends Component {
+
+    checkCookies() {
+        if (Cookies.get('sessionCode') === undefined) {
+            window.location.reload();
+        }
+    }
   render() {
-    return (
-        <div className='container'>
-            <QualificationTable/>
-        </div>
-    );
+        this.checkCookies();
+        return (
+            <div className='container'>
+                <QualificationView/>
+            </div>
+        );
   }
 }
 

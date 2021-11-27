@@ -1,7 +1,8 @@
-import React , {useEffect} from 'react'
-import './Navbar2.css';
+import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
+import './css/Navbar2.css';
 import $ from 'jquery';
+import Cookies from "js-cookie";
 
 const Navbar2 = () => {
 
@@ -68,36 +69,57 @@ const Navbar2 = () => {
               <div className="left"></div>
               <div className="right"></div>
             </div>
-            
+
             <li className="nav-item active">
+                <NavLink className="nav-link" to="/" exact>
+                    <i className="fas fa-tachometer-alt">
+                    </i>Strona Główna
+                </NavLink>
+            </li>
+
+            { Cookies.get('coordinatorRole') === 'DEPARTMENT' ?
+                <li className="nav-item">
+                    <NavLink className="nav-link" to="/editions" exact>
+                        <i
+                            className="far fa-chart-bar">
+                        </i>Edycje
+                    </NavLink>
+                </li>
+                : ""
+            }
+
+            <li className="nav-item">
               <NavLink className="nav-link" to="/contracts" exact>
                 <i 
                 className="fas fa-tachometer-alt">
-                </i>Lista Umów
+                </i>Umowy
               </NavLink>
             </li>
 
+            { Cookies.get('coordinatorRole') === 'DEPARTMENT' ?
             <li className="nav-item">
               <NavLink className="nav-link" to="/coordinators" exact>
                 <i 
                 className="far fa-address-book">
-                </i>Koordynatorzy Umów
+                </i>Koordynatorzy
               </NavLink> 
+            </li>
+                : ""
+            }
+
+            <li className="nav-item">
+                <NavLink className="nav-link" to="/qualification" exact>
+                    <i
+                        className="far fa-clone">
+                    </i>Kwalifikacja
+                </NavLink>
             </li>
 
             <li className="nav-item">
-              <NavLink className="nav-link" to="/qualification" exact>
-                <i 
-                className="far fa-clone">
-                </i>Kwalifikacja Studentów
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/editions" exact>
-                <i 
-                className="far fa-chart-bar">
-                </i>Lista Edycji
-              </NavLink>
+                <NavLink className="nav-link" to="/students" exact>
+                    <i className="far fa-clone">
+                    </i>Studenci
+                </NavLink>
             </li>
         </ul>
       </div>

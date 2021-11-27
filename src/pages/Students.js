@@ -1,24 +1,23 @@
 import React, { Component } from 'react';
-import CoordinatorsList from '../components/CoordinatorsList';
+import StudentsList from "../components/StudentsList";
 import Cookies from "js-cookie";
 
-
-class Coordinators extends Component {
+class Students extends Component {
 
     checkCookies() {
         if (Cookies.get('sessionCode') === undefined) {
             window.location.reload();
         }
     }
-   
+
     render() {
         this.checkCookies();
         return (
-            <div className="container">
-                <CoordinatorsList/>
+            <div className='container'>
+                <StudentsList/>
             </div>
         );
     }
 }
 
-export default Coordinators;
+export default Students;
